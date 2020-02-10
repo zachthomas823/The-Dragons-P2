@@ -1,0 +1,33 @@
+2020/02/05 22:33:28 Server running on :4000
+2020/02/05 22:39:08 Server running on :4000
+2020/02/05 22:40:57 Server running on :4000
+2020/02/05 22:41:05 Access denied to http://localhost:4000/ on sorted_stats endpoint
+2020/02/05 22:41:10 vince carter searched for on the player endpoint by http://localhost:5000/
+2020/02/05 22:41:12 Age searched for on the sorted_stats endpoint by http://localhost:5000/
+2020/02/05 22:41:16 3PA searched for on the sorted_stats endpoint by http://localhost:5000/
+2020/02/05 22:54:52 Server running on :4000
+2020/02/05 22:54:56 Server running on :4000
+2020/02/05 22:55:05 Access denied to http://localhost:4000/ on sorted_stats endpoint
+2020/02/05 22:55:09 vince carter searched for on the player endpoint by http://localhost:5000/
+2020/02/05 22:58:50 Server running on :4000
+2020/02/05 23:48:22 Server running on :4000
+2020/02/05 23:49:16 Access denied to http://localhost:4000/ on player endpoint
+2020/02/05 23:49:57 Access denied to http://localhost:5000/ on player endpoint
+2020/02/05 23:50:49 http: panic serving 127.0.0.1:57932: runtime error: index out of range
+goroutine 8 [running]:
+net/http.(*conn).serve.func1(0xc4202841e0)
+	/usr/lib/go-1.10/src/net/http/server.go:1726 +0xd0
+panic(0x66b720, 0x82c6a0)
+	/usr/lib/go-1.10/src/runtime/panic.go:502 +0x229
+main.main.func1(0x6f4100, 0xc4201be2a0, 0xc420286500)
+	/home/zach/go/src/github.com/project-1/docker/stats_firewall/stats_firewall.go:42 +0x493
+net/http.HandlerFunc.ServeHTTP(0xc42010e2a0, 0x6f4100, 0xc4201be2a0, 0xc420286500)
+	/usr/lib/go-1.10/src/net/http/server.go:1947 +0x44
+net/http.(*ServeMux).ServeHTTP(0x837e60, 0x6f4100, 0xc4201be2a0, 0xc420286500)
+	/usr/lib/go-1.10/src/net/http/server.go:2340 +0x130
+net/http.serverHandler.ServeHTTP(0xc42008d110, 0x6f4100, 0xc4201be2a0, 0xc420286500)
+	/usr/lib/go-1.10/src/net/http/server.go:2697 +0xbc
+net/http.(*conn).serve(0xc4202841e0, 0x6f42c0, 0xc4200622c0)
+	/usr/lib/go-1.10/src/net/http/server.go:1830 +0x651
+created by net/http.(*Server).Serve
+	/usr/lib/go-1.10/src/net/http/server.go:2798 +0x27b
