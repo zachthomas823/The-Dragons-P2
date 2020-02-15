@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: html-server
+  labels:
+    app: zach-html
+
+spec:
+  containers:
+  - name: zach-html
+    image: zachthomas823/server
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    ports:
+      - containerPort: 4000
