@@ -15,7 +15,7 @@ import (
 
 func main() {
 	backendPort := config.PORT
-	backendURL, err := url.Parse("http://172.17.0.2:4000")
+	backendURL, err := url.Parse(":4000")
 	if err != nil {
 		log.Fatal(err)
 	}
