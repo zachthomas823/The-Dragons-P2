@@ -6,7 +6,7 @@ provider "aws" {
   region     = "us-east-2"
 }
 
-resource "aws_instance" "example" {
+resource "aws_instance" "worker" {
   ami           = "ami-0fc20dd1da406780b"
   instance_type = "t2.micro"
 
@@ -23,15 +23,58 @@ resource "aws_instance" "example" {
     timeout = "4m"
   }
   provisioner "file" {
-    source      = "setup_node_env.sh"
-    destination = "/tmp/setup_node_env.sh"
+    source      = "setup_worker.sh"
+    destination = "/tmp/setup_worker.sh"
   }
   provisioner "remote-exec" {
     inline = [
-      "sudo /bin/bash /tmp/setup_node_env.sh",
+      "sudo /bin/bash /tmp/setup_worker.sh",
+    ]
+  }
+}
+
+resource "aws_instance" "master" {
+  ami           = "ami-0fc20dd1da406780b"
+  instance_type = "t2.medium"
+
+  #Generate your own Key_Name from AWS and use that here
+  #DO NOT UPLOAD THESE FILES, make sure they are masked by the .gitignore
+  key_name = "Temp"
+  security_groups = ["${aws_security_group.SSH.name}"]
+
+  connection {
+    user = "ubuntu"
+    type = "ssh"
+    private_key = "${file("./Temp.pem")}"
+    host =  self.public_ip
+    timeout = "4m"
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "mkdir pods",
+      "mkdir services",
     ]
   }
 
+  provisioner "file" {
+    source      = "setup_master.sh"
+    destination = "/tmp/setup_master.sh"
+  }
+  provisioner "file" {
+    source      = "../kubernetes/services/client-server.yaml"
+    destination = "/home/ubuntu/services/client-server.yaml"
+  }
+  provisioner "file" {
+    source      = "../kubernetes/pods/html-server.yaml"
+    destination = "/home/ubuntu/pods/html-server.yaml"
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "sudo /bin/bash /tmp/setup_master.sh",
+    ]
+  }
 }
 
 resource "aws_security_group" "SSH" {
@@ -40,11 +83,11 @@ resource "aws_security_group" "SSH" {
 
 
   ingress {
-    from_port   = 22 
-    to_port     = 22
-    protocol =   "tcp"
+    from_port   = 0 
+    to_port     = 0
+    protocol =   "-1"
 
-    cidr_blocks =  ["64.189.196.114/32"]
+    cidr_blocks =  ["0.0.0.0/0"]
   }
 
   egress {

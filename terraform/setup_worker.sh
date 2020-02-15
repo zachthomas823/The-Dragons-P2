@@ -32,6 +32,11 @@ apt-get -y install docker-ce docker-ce-cli containerd.io
 systemctl enable docker
 systemctl start docker
 
+setenforce 0
+sed -i --follow-symlinks 's/^SELINUX=enforcing/SELINUX=disabled/' /etc/sysconfig/selinux
+
+systemctl disable firewalld
+systemctl stop firewalld
 
 #Kuber requirements
 sed -i '/swap/d' /etc/fstab
@@ -50,9 +55,3 @@ apt-mark hold kubelet kubeadm kubectl
 #Start Kubelet for overlay connections
 systemctl enable kubelet
 systemctl start kubelet
-
-#Env setup, can now connect to a master node
-#Note to self. If error check ports in worker.tf
-#probably need to expose more ports, check kubeadm 
-#install page for list of ports used by overlay network
-#https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
