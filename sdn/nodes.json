@@ -1,0 +1,9 @@
+[
+	{
+		"Name": "joseph-virtualbox",
+		"Status": "Ready",
+		"Roles": "master",
+		"Age": "69m",
+		"Version": "v1.17.3"
+	}
+]
