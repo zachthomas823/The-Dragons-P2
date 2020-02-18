@@ -1,44 +1,32 @@
 provider "aws" {
   #Two localfiles names as such. Each contains what they say, given to you from AWS.
   #DO NOT UPLOAD THESE FILES, make sure they are masked by the .gitignore
-  access_key = "${file("../access_key")}"
-  secret_key = "${file("../secret_key")}"
+  access_key = "${file("../../access_key")}"
+  secret_key = "${file("../../secret_key")}"
   region     = "us-east-2"
 }
 
-variable "tag_name" {
-  type = string
-  default = "worker"
-}
 
-resource "aws_instance" "worker"{
-  ami           = "ami-0fc20dd1da406780b"
+resource "aws_launch_template" "worker"{
+  name_prefix   = "worker"
+  image_id      = "ami-0920a73d71dd0ab71"
   instance_type = "t2.micro"
-
-  tags = {
-    Name = "${var.tag_name}"
-  }
 
   #Generate your own Key_Name from AWS and use that here
   #DO NOT UPLOAD THESE FILES, make sure they are masked by the .gitignore
   key_name = "Temp"
-  security_groups = ["${aws_security_group.SSH.name}"]
+  security_group_names = ["${aws_security_group.SSH.name}"]
+}
 
-  connection {
-    user = "ubuntu"
-    type = "ssh"
-    private_key = "${file("../Temp.pem")}"
-    host =  self.public_ip
-    timeout = "4m"
-  }
-  provisioner "file" {
-    source      = "setup_worker.sh"
-    destination = "/tmp/setup_worker.sh"
-  }
-  provisioner "remote-exec" {
-    inline = [
-      "sudo /bin/bash /tmp/setup_worker.sh",
-    ]
+resource "aws_autoscaling_group" "worker_asg" {
+  availability_zones = ["us-east-2a"]
+  desired_capacity   = 2
+  max_size           = 3
+  min_size           = 1
+
+  launch_template {
+    id      = "${aws_launch_template.worker.id}"
+    version = "$Latest"
   }
 }
 

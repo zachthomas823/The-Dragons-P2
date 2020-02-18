@@ -20,7 +20,7 @@ resource "aws_instance" "master" {
     type = "ssh"
     private_key = "${file("../Temp.pem")}"
     host =  self.public_ip
-    timeout = "4m"
+    timeout = "20m"
   }
 
   provisioner "remote-exec" {
