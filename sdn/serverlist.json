@@ -1,10 +1,4 @@
 {
-	"ServerNames": [
-		"HTTP",
-		"HTTPS"
-	],
-	"NodePorts": [
-		"30080",
-		"30443"
-	]
+	"HTTP": "80",
+	"HTTPS": "443"
 }

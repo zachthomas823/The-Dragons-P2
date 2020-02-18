@@ -1,0 +1,18 @@
+[
+	{
+		"Name": "client-server",
+		"Type": "NodePort",
+		"ClusterIP": "10.107.226.90",
+		"ExternalIP": "\u003cnone\u003e",
+		"Port": "80:30100/TCP",
+		"Age": "12m"
+	},
+	{
+		"Name": "kubernetes",
+		"Type": "ClusterIP",
+		"ClusterIP": "10.96.0.1",
+		"ExternalIP": "\u003cnone\u003e",
+		"Port": "443/TCP",
+		"Age": "10h"
+	}
+]
