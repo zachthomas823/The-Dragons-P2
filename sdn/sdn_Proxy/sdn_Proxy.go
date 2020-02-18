@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net"
-	"os/exec"
 	"strings"
 	"time"
 )
@@ -16,26 +15,11 @@ const TIMETOSLEEP = 10 * time.Second
 //clientserver
 var backendServers map[string]string = make(map[string]string)
 var shutdownchan chan string = make(chan string)
-var NodesList []Node
-
-type Severs struct {
-	ServerNames []string `json:"ServerNames"`
-	NodePorts   []string `json:"NodePorts"`
-}
-
-type Node struct {
-	Name    string
-	Status  string
-	Roles   string
-	Age     string
-	Version string
-}
 
 func main() {
 	fmt.Println("Software Defined Network Terminal")
-	go StartReverseProxy("80")
-	go GetNodes()
 	go GrabServers()
+	go StartReverseProxy("80")
 	<-shutdownchan
 	fmt.Println("Shuting Down...")
 	time.Sleep(TIMETOSLEEP)
@@ -72,7 +56,7 @@ func StartReverseProxy(port string) {
 func Session(ln net.Listener, ConnSignal chan string, port string) {
 	conn, _ := ln.Accept()
 	defer conn.Close()
-	ConnSignal <- "New Connection\n"
+	ConnSignal <- "New Connection \n"
 
 	//Checking for server to handle the connecting client
 	buf := make([]byte, 1024)
@@ -121,62 +105,13 @@ func SessionListenerWriter(Conn1 net.Conn, Conn2 net.Conn, shutdown chan string)
 	shutdown <- "Session Closed"
 }
 
-//GrabServers allows user to add servers to list
+//GrabServers test
 func GrabServers() {
-	for {
-		openFile, _ := ioutil.ReadFile("serverlist.json")
 
-		serverMain := Severs{}
+	openFile, _ := ioutil.ReadFile("../serverlist.json")
 
-		_ = json.Unmarshal(openFile, &serverMain)
+	_ = json.Unmarshal(openFile, &backendServers)
 
-		backendServers = make(map[string]string)
-		for k, v := range serverMain.ServerNames {
-			backendServers[v] = serverMain.NodePorts[k]
-		}
+	time.Sleep(TIMETOSLEEP)
 
-		time.Sleep(TIMETOSLEEP)
-	}
-
-}
-
-func GetNodes() {
-	for {
-		var NewNode Node
-		var TempNodesList []Node
-
-		output, _ := exec.Command("kubectl", "get", "nodes").Output()
-
-		t := strings.Split(string(output), "\n")
-		t = t[1:]
-
-		for _, v := range t {
-			z := strings.Split(v, " ")
-
-			var temp []string
-
-			for k2, v2 := range z {
-				z[k2] = strings.TrimSpace(v2)
-				if z[k2] != "" {
-					temp = append(temp, z[k2])
-				}
-			}
-
-			z = temp
-
-			if len(z) != 0 {
-				NewNode = Node{Name: z[0], Status: z[1], Roles: z[2], Age: z[3], Version: z[4]}
-				TempNodesList = append(NodesList, NewNode)
-			}
-
-		}
-
-		NodesList = TempNodesList
-
-		byteslice, _ := json.MarshalIndent(NodesList, "", "	")
-
-		ioutil.WriteFile("nodes.json", byteslice, 7777)
-
-		time.Sleep(TIMETOSLEEP)
-	}
 }
