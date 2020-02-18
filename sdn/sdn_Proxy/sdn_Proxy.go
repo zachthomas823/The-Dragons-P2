@@ -18,11 +18,11 @@ var shutdownchan chan string = make(chan string)
 
 func main() {
 	fmt.Println("Software Defined Network Terminal")
+
 	go GrabServers()
-	go StartReverseProxy("80")
+	go StartReverseProxy("8080")
 	<-shutdownchan
 	fmt.Println("Shuting Down...")
-	time.Sleep(TIMETOSLEEP)
 }
 
 //StartReverseProxy begins the hosting process for the
@@ -108,7 +108,7 @@ func SessionListenerWriter(Conn1 net.Conn, Conn2 net.Conn, shutdown chan string)
 //GrabServers test
 func GrabServers() {
 
-	openFile, _ := ioutil.ReadFile("../serverlist.json")
+	openFile, _ := ioutil.ReadFile("./serverlist.json")
 
 	_ = json.Unmarshal(openFile, &backendServers)
 

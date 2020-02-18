@@ -12,6 +12,7 @@ func main() {
 
 	commandfile, _ := os.OpenFile("../commandlist", os.O_RDWR|os.O_CREATE, 7777)
 	AllBytes, _ := ioutil.ReadAll(commandfile)
+	//BUG SPLAT: Possible command loss
 	commandfile.Truncate(0)
 	Lines := strings.Split(string(AllBytes), "\n")
 

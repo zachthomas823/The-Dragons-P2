@@ -1,0 +1,6 @@
+FROM ubuntu
+WORKDIR /app
+COPY sdn_Proxy /app
+COPY serverlist.json /app
+EXPOSE 8080
+CMD [ "./sdn_Proxy" ]
