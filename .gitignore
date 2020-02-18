@@ -5,3 +5,4 @@ terraform.tfstate.backup
 Temp.pem
 access_key
 secret_key
+credentials.csv
