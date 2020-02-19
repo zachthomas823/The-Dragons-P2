@@ -5,8 +5,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net"
-	"os"
-	"os/exec"
 	"strings"
 	"time"
 )
@@ -21,7 +19,6 @@ var PublicIP string
 
 func main() {
 	fmt.Println("Software Defined Network Terminal")
-	PublicIP = GetPrivateIP()
 	go GrabServers()
 	go StartReverseProxy("8080")
 	<-shutdownchan
@@ -69,7 +66,7 @@ func Session(ln net.Listener, ConnSignal chan string, port string) {
 	for {
 		for k, v := range backendServers {
 			if strings.Contains(string(buf), k) {
-				serverConn, err = net.Dial("tcp", PublicIP+":"+v)
+				serverConn, err = net.Dial("tcp", ":"+v)
 				if err != nil {
 					conn.Write([]byte("Could not resolve: " + PublicIP + ":" + v))
 					//Server Could not be dialed, remove it from backendservers here
@@ -87,59 +84,50 @@ func Session(ln net.Listener, ConnSignal chan string, port string) {
 
 	}
 
+	toclient := make(chan []byte)
+	toserver := make(chan []byte)
 	shutdownSession := make(chan string)
-	go SessionListenerWriter(serverConn, conn, shutdownSession)
-	go SessionListenerWriter(conn, serverConn, shutdownSession)
+	go SessionWriter(conn, shutdownchan, toclient)
+	go SessionWriter(serverConn, shutdownchan, toserver)
+	go SessionListener(serverConn, shutdownSession, toclient)
+	go SessionListener(conn, shutdownSession, toserver)
 	<-shutdownSession
+	time.Sleep(5 * time.Second)
 }
 
-//SessionListenerWriter listens for connections noise and sends it to the writer
-func SessionListenerWriter(Conn1 net.Conn, Conn2 net.Conn, shutdown chan string) {
+//SessionListener listens for connections noise and sends it to the writer
+func SessionListener(Conn net.Conn, shutdown chan string, writer chan []byte) {
 	for {
 		buf := make([]byte, 1024)
-		Conn1.SetReadDeadline(time.Now().Add(30 * time.Second))
-		_, err := Conn1.Read(buf)
+		Conn.SetReadDeadline(time.Now().Add(30 * time.Second))
+		_, err := Conn.Read(buf)
 		if err != nil {
 			fmt.Println(err)
-			Conn1.Write([]byte("Timeout Error, No Signal. Disconnecting. \n"))
 			break
 		}
-		Conn2.Write(buf)
+		writer <- buf
 	}
 	shutdown <- "Session Closed"
+}
+
+func SessionWriter(Conn net.Conn, shutdown chan string, writer chan []byte) {
+
+	for {
+		buf := <-writer
+
+		Conn.Write(buf)
+
+	}
 }
 
 //GrabServers test
 func GrabServers() {
 	for {
 
-		openFile, _ := ioutil.ReadFile("./serverlist.json")
+		openFile, _ := ioutil.ReadFile("../serverlist.json")
 
 		_ = json.Unmarshal(openFile, &backendServers)
 
 		time.Sleep(TIMETOSLEEP)
 	}
-
-}
-
-func GetPrivateIP() string {
-	var name string
-
-	nameout, _ := exec.Command("kubectl", "get", "nodes").Output()
-	nodes := strings.Split(string(nameout), "\n")
-	for _, v := range nodes {
-		if strings.Contains(v, "master") {
-			masternode := strings.Split(v, " ")
-			name = masternode[0]
-			break
-		}
-	}
-
-	out, _ := exec.Command("kubectl", "describe", "nodes", name).Output()
-	f, _ := os.OpenFile("temp", os.O_CREATE|os.O_RDWR|os.O_TRUNC, 7777)
-	f.Write(out)
-	newout, _ := exec.Command("grep", "InternalIP", "./temp").Output()
-
-	outputslice := strings.Split(string(newout), " ")
-	return (outputslice[len(outputslice)-1])
 }
