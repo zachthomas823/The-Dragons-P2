@@ -63,8 +63,12 @@ resource "aws_instance" "master" {
     destination = "/home/ubuntu/terraform/Temp.pem"
   }
   provisioner "file" {
-    source      = "../../kubernetes/"
-    destination = "/home/ubuntu/kubernetes/"
+    source      = "../../kubernetes"
+    destination = "/home/ubuntu/kubernetes"
+  }
+  provisioner "file" {
+    source      = "../../sdn"
+    destination = "/home/ubuntu/sdn"
   }
 
   provisioner "remote-exec" {
