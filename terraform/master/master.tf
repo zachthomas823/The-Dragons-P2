@@ -7,7 +7,7 @@ provider "aws" {
 }
 
 resource "aws_instance" "master" {
-  ami           = "ami-003e085bc4c819984"
+  ami           = "ami-0fc20dd1da406780b"
   instance_type = "t2.medium"
 
   #Generate your own Key_Name from AWS and use that here
@@ -38,7 +38,7 @@ resource "aws_instance" "master" {
   }
   provisioner "file" {
     source      = "../worker/worker_as/worker_as.tf"
-    destination = "/home/ubuntu/terraform/worker/worker_as/worker.tf"
+    destination = "/home/ubuntu/terraform/worker/worker_as/worker_as.tf"
   }
   provisioner "file" {
     source      = "master.tf"
@@ -68,17 +68,22 @@ resource "aws_instance" "master" {
     source = "terraform"
     destination = "/home/ubuntu/terraform/terraform"
   }
+  provisioner "file" {
+    source = "join.sh"
+    destination = "/home/ubuntu/terraform/worker/worker_as/join.sh"
+  }
 
   provisioner "remote-exec" {
     inline = [
       "sudo /bin/bash /tmp/setup_master.sh",
       "cd terraform",
-      # "unzip terraform_0.12.20_linux_amd64.zip",
       "sudo chmod 777 terraform",
       "sudo mv terraform /usr/local/bin",
       "cd worker/worker_as",
-      "sudo terraform init",
-      "sudo terraform apply --auto-approve"
+      "sudo chmod 777 join.sh",
+      "kubeadm token create --print-join-command >> join.sh",
+      "terraform init",
+      "terraform apply --auto-approve"
     ]
   }
 }
