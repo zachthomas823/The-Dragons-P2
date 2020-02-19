@@ -17,15 +17,15 @@ Unschedulable:      false
 Lease:
   HolderIdentity:  joseph-virtualbox
   AcquireTime:     <unset>
-  RenewTime:       Tue, 18 Feb 2020 20:36:34 -0600
+  RenewTime:       Tue, 18 Feb 2020 22:28:38 -0600
 Conditions:
   Type                 Status  LastHeartbeatTime                 LastTransitionTime                Reason                       Message
   ----                 ------  -----------------                 ------------------                ------                       -------
   NetworkUnavailable   False   Tue, 18 Feb 2020 09:28:59 -0600   Tue, 18 Feb 2020 09:28:59 -0600   CalicoIsUp                   Calico is running on this node
-  MemoryPressure       False   Tue, 18 Feb 2020 20:34:47 -0600   Mon, 17 Feb 2020 05:37:34 -0600   KubeletHasSufficientMemory   kubelet has sufficient memory available
-  DiskPressure         False   Tue, 18 Feb 2020 20:34:47 -0600   Mon, 17 Feb 2020 05:37:34 -0600   KubeletHasNoDiskPressure     kubelet has no disk pressure
-  PIDPressure          False   Tue, 18 Feb 2020 20:34:47 -0600   Mon, 17 Feb 2020 05:37:34 -0600   KubeletHasSufficientPID      kubelet has sufficient PID available
-  Ready                True    Tue, 18 Feb 2020 20:34:47 -0600   Tue, 18 Feb 2020 09:28:46 -0600   KubeletReady                 kubelet is posting ready status. AppArmor enabled
+  MemoryPressure       False   Tue, 18 Feb 2020 22:26:36 -0600   Mon, 17 Feb 2020 05:37:34 -0600   KubeletHasSufficientMemory   kubelet has sufficient memory available
+  DiskPressure         False   Tue, 18 Feb 2020 22:26:36 -0600   Mon, 17 Feb 2020 05:37:34 -0600   KubeletHasNoDiskPressure     kubelet has no disk pressure
+  PIDPressure          False   Tue, 18 Feb 2020 22:26:36 -0600   Mon, 17 Feb 2020 05:37:34 -0600   KubeletHasSufficientPID      kubelet has sufficient PID available
+  Ready                True    Tue, 18 Feb 2020 22:26:36 -0600   Tue, 18 Feb 2020 09:28:46 -0600   KubeletReady                 kubelet is posting ready status. AppArmor enabled
 Addresses:
   InternalIP:  10.0.2.15
   Hostname:    joseph-virtualbox
@@ -55,15 +55,15 @@ System Info:
 Non-terminated Pods:          (9 in total)
   Namespace                   Name                                         CPU Requests  CPU Limits  Memory Requests  Memory Limits  AGE
   ---------                   ----                                         ------------  ----------  ---------------  -------------  ---
-  kube-system                 calico-kube-controllers-5b644bc49c-s9hf9     0 (0%)        0 (0%)      0 (0%)           0 (0%)         38h
-  kube-system                 calico-node-6cchw                            250m (12%)    0 (0%)      0 (0%)           0 (0%)         38h
-  kube-system                 coredns-6955765f44-6xj2p                     100m (5%)     0 (0%)      70Mi (1%)        170Mi (3%)     38h
-  kube-system                 coredns-6955765f44-9rjj4                     100m (5%)     0 (0%)      70Mi (1%)        170Mi (3%)     38h
-  kube-system                 etcd-joseph-virtualbox                       0 (0%)        0 (0%)      0 (0%)           0 (0%)         38h
-  kube-system                 kube-apiserver-joseph-virtualbox             250m (12%)    0 (0%)      0 (0%)           0 (0%)         38h
-  kube-system                 kube-controller-manager-joseph-virtualbox    200m (10%)    0 (0%)      0 (0%)           0 (0%)         38h
-  kube-system                 kube-proxy-c4979                             0 (0%)        0 (0%)      0 (0%)           0 (0%)         38h
-  kube-system                 kube-scheduler-joseph-virtualbox             100m (5%)     0 (0%)      0 (0%)           0 (0%)         38h
+  kube-system                 calico-kube-controllers-5b644bc49c-s9hf9     0 (0%)        0 (0%)      0 (0%)           0 (0%)         40h
+  kube-system                 calico-node-6cchw                            250m (12%)    0 (0%)      0 (0%)           0 (0%)         40h
+  kube-system                 coredns-6955765f44-6xj2p                     100m (5%)     0 (0%)      70Mi (1%)        170Mi (3%)     40h
+  kube-system                 coredns-6955765f44-9rjj4                     100m (5%)     0 (0%)      70Mi (1%)        170Mi (3%)     40h
+  kube-system                 etcd-joseph-virtualbox                       0 (0%)        0 (0%)      0 (0%)           0 (0%)         40h
+  kube-system                 kube-apiserver-joseph-virtualbox             250m (12%)    0 (0%)      0 (0%)           0 (0%)         40h
+  kube-system                 kube-controller-manager-joseph-virtualbox    200m (10%)    0 (0%)      0 (0%)           0 (0%)         40h
+  kube-system                 kube-proxy-c4979                             0 (0%)        0 (0%)      0 (0%)           0 (0%)         40h
+  kube-system                 kube-scheduler-joseph-virtualbox             100m (5%)     0 (0%)      0 (0%)           0 (0%)         40h
 Allocated resources:
   (Total limits may be over 100 percent, i.e., overcommitted.)
   Resource           Requests    Limits
