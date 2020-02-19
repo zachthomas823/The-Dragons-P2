@@ -1,10 +1,42 @@
 [
 	{
+		"Name": "daniel",
+		"Type": "NodePort",
+		"ClusterIP": "10.110.163.218",
+		"ExternalIP": "\u003cnone\u003e",
+		"Port": "4000:30590/TCP",
+		"Age": "88s"
+	},
+	{
+		"Name": "joseph",
+		"Type": "NodePort",
+		"ClusterIP": "10.99.25.104",
+		"ExternalIP": "\u003cnone\u003e",
+		"Port": "4000:30509/TCP",
+		"Age": "67m"
+	},
+	{
 		"Name": "kubernetes",
 		"Type": "ClusterIP",
 		"ClusterIP": "10.96.0.1",
 		"ExternalIP": "\u003cnone\u003e",
 		"Port": "443/TCP",
-		"Age": "2d3h"
+		"Age": "2d11h"
+	},
+	{
+		"Name": "neo",
+		"Type": "NodePort",
+		"ClusterIP": "10.110.191.29",
+		"ExternalIP": "\u003cnone\u003e",
+		"Port": "4000:30319/TCP",
+		"Age": "65m"
+	},
+	{
+		"Name": "zach",
+		"Type": "NodePort",
+		"ClusterIP": "10.110.43.247",
+		"ExternalIP": "\u003cnone\u003e",
+		"Port": "4000:31136/TCP",
+		"Age": "72m"
 	}
 ]

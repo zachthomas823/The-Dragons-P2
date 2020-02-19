@@ -26,11 +26,21 @@ func readCommands() {
 		AllBytes, _ := ioutil.ReadAll(commandFile)
 		commandFile.Truncate(0)
 		mu.Unlock()
+
+		var temp []byte = nil
+		for _, v := range AllBytes {
+			fmt.Println(temp)
+			if v != 0 {
+				temp = append(temp, v)
+			}
+		}
+		AllBytes = temp
+
 		Lines := strings.Split(string(AllBytes), "\n")
 
 		for _, v := range Lines {
-
 			command := strings.Split(string(v), " ")
+			fmt.Println(v)
 			out, _ := exec.Command(command[0], command[1:]...).Output()
 			fmt.Print(string(out))
 		}
@@ -68,7 +78,15 @@ func commandConnection(ls net.Listener, conPipe chan string, commandFile *os.Fil
 	buf := make([]byte, 1024)
 	con.Read(buf)
 
+	var temp []byte = nil
+	for _, v := range buf {
+		if v != 0 {
+			temp = append(temp, v)
+		}
+	}
+	buf = temp
+
 	mu.Lock()
-	commandFile.Write(buf)
+	commandFile.Write(temp)
 	mu.Unlock()
 }
