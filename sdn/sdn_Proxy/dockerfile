@@ -3,4 +3,5 @@ WORKDIR /app
 COPY sdn_Proxy /app
 COPY serverlist.json /app
 EXPOSE 8080
+EXPOSE 80
 CMD [ "./sdn_Proxy" ]
