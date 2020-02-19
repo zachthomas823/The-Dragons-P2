@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: html-server
+  labels:
+    app: sdn
+
+spec:
+  containers:
+  - name: sdn
+    image: zachthomas823/sdn-proxy
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    ports:
+      - containerPort: 4000

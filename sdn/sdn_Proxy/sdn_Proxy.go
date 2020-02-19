@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net"
+	"os"
+	"os/exec"
 	"strings"
 	"time"
 )
@@ -15,14 +17,15 @@ const TIMETOSLEEP = 10 * time.Second
 //clientserver
 var backendServers map[string]string = make(map[string]string)
 var shutdownchan chan string = make(chan string)
+var PublicIP string
 
 func main() {
 	fmt.Println("Software Defined Network Terminal")
+	PublicIP = GetPrivateIP()
 	go GrabServers()
-	go StartReverseProxy("80")
+	go StartReverseProxy("8080")
 	<-shutdownchan
 	fmt.Println("Shuting Down...")
-	time.Sleep(TIMETOSLEEP)
 }
 
 //StartReverseProxy begins the hosting process for the
@@ -66,8 +69,9 @@ func Session(ln net.Listener, ConnSignal chan string, port string) {
 	for {
 		for k, v := range backendServers {
 			if strings.Contains(string(buf), k) {
-				serverConn, err = net.Dial("tcp", v)
+				serverConn, err = net.Dial("tcp", PublicIP+":"+v)
 				if err != nil {
+					conn.Write([]byte("Could not resolve: " + PublicIP + ":" + v))
 					//Server Could not be dialed, remove it from backendservers here
 					return
 				} else {
@@ -107,11 +111,35 @@ func SessionListenerWriter(Conn1 net.Conn, Conn2 net.Conn, shutdown chan string)
 
 //GrabServers test
 func GrabServers() {
+	for {
 
-	openFile, _ := ioutil.ReadFile("../serverlist.json")
+		openFile, _ := ioutil.ReadFile("./serverlist.json")
 
-	_ = json.Unmarshal(openFile, &backendServers)
+		_ = json.Unmarshal(openFile, &backendServers)
 
-	time.Sleep(TIMETOSLEEP)
+		time.Sleep(TIMETOSLEEP)
+	}
 
+}
+
+func GetPrivateIP() string {
+	var name string
+
+	nameout, _ := exec.Command("kubectl", "get", "nodes").Output()
+	nodes := strings.Split(string(nameout), "\n")
+	for _, v := range nodes {
+		if strings.Contains(v, "master") {
+			masternode := strings.Split(v, " ")
+			name = masternode[0]
+			break
+		}
+	}
+
+	out, _ := exec.Command("kubectl", "describe", "nodes", name).Output()
+	f, _ := os.OpenFile("temp", os.O_CREATE|os.O_RDWR|os.O_TRUNC, 7777)
+	f.Write(out)
+	newout, _ := exec.Command("grep", "InternalIP", "./temp").Output()
+
+	outputslice := strings.Split(string(newout), " ")
+	return (outputslice[len(outputslice)-1])
 }
