@@ -6,11 +6,16 @@ provider "aws" {
   region     = "us-east-2"
 }
 
+data "template_file" "user_data" {
+  template = file("join.sh")
+}
 
 resource "aws_launch_template" "worker"{
   name_prefix   = "worker"
   image_id      = "ami-0920a73d71dd0ab71"
   instance_type = "t2.micro"
+  # user_data = base64encode(file("join.sh"))
+  user_data = base64encode(data.template_file.user_data.rendered)
 
   #Generate your own Key_Name from AWS and use that here
   #DO NOT UPLOAD THESE FILES, make sure they are masked by the .gitignore
@@ -20,8 +25,8 @@ resource "aws_launch_template" "worker"{
 
 resource "aws_autoscaling_group" "worker_asg" {
   availability_zones = ["us-east-2a"]
-  desired_capacity   = 2
-  max_size           = 3
+  desired_capacity   = 1
+  max_size           = 5
   min_size           = 1
 
   launch_template {
