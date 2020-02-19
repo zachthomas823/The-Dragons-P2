@@ -1,8 +1,8 @@
 provider "aws" {
   #Two localfiles names as such. Each contains what they say, given to you from AWS.
   #DO NOT UPLOAD THESE FILES, make sure they are masked by the .gitignore
-  access_key = "${file("../access_key")}"
-  secret_key = "${file("../secret_key")}"
+  access_key = file("../access_key")
+  secret_key = file("../secret_key")
   region     = "us-east-2"
 }
 
@@ -13,14 +13,14 @@ resource "aws_instance" "master" {
   #Generate your own Key_Name from AWS and use that here
   #DO NOT UPLOAD THESE FILES, make sure they are masked by the .gitignore
   key_name = "Temp"
-  security_groups = ["${aws_security_group.SSH.name}"]
+  security_groups = [aws_security_group.SSH.name]
 
   connection {
     user = "ubuntu"
     type = "ssh"
-    private_key = "${file("../Temp.pem")}"
+    private_key = file("../Temp.pem")
     host =  self.public_ip
-    timeout = "4m"
+    timeout = "20m"
   }
 
   provisioner "remote-exec" {
@@ -43,7 +43,7 @@ resource "aws_instance" "master" {
     destination = "/home/ubuntu/pods/html-server.yaml"
   }
   provisioner "file" {
-    source      = "../worker/worker.tf"
+    source      = "../worker/worker_as/worker_as.tf"
     destination = "/home/ubuntu/terraform/worker.tf"
   }
   provisioner "file" {
@@ -61,6 +61,10 @@ resource "aws_instance" "master" {
   provisioner "file" {
     source      = "../Temp.pem"
     destination = "/home/ubuntu/terraform/Temp.pem"
+  }
+  provisioner "file" {
+    source      = "../../kubernetes/"
+    destination = "/home/ubuntu/kubernetes/"
   }
 
   provisioner "remote-exec" {
