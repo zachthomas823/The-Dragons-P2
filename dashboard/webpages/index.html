@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/> <!-- static/styles.css -->
+</head>
+<body>
+
+    <div class="w3-row">
+        <div class=" w3-col" style="width:25%">&nbsp</div>
+        <div class="w3-col w3-panel w3-blue w3-card-4" style="width:50%">
+            
+            <div class="w3-center">
+                <h1>Pods</h1>
+            </div>
+        </div>
+    </div>
+
+    {{range $index, $element := .Podlist}}
+ 
+    <div class="w3-row">
+
+        <div class=" w3-col" style="width:3.3%">&nbsp</div>
+        <div onclick="document.getElementById('id01').style.display='block'" class="w3-ripple w3-button w3-panel w3-blue w3-card-4  w3-col" style="width:30%">
+            <div class="w3-row">
+                <div class="w3-center">
+                    <h1>{{$element.Name}}</h1>
+                </div>
+            </div>
+            <div class="w3-row">
+                <div>
+                    <h1>{{$element.Port}}</h1>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    {{end}}
+    
+
+   
+
+    <div id="id01" class="w3-modal">
+        <div class="w3-modal-content w3-card-4">
+            <div class="w3-container">
+                  <div class="w3-container w3-green">
+                    <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                    <h2>Input Form</h2>
+                  </div>
+              
+                  <form class="w3-container">
+                    <p>
+                    <input class="w3-input" type="text">
+                    <label>First Name</label></p>
+                    <p>     
+                    <input class="w3-input" type="text">
+                    <label>Last Name</label></p>
+                  </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="id02" class="w3-modal">
+        <div class="w3-modal-content">
+          <div class="w3-container">
+            <span onclick="document.getElementById('id02').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+            <p>Some text. Some text. Some text.</p>
+            <p>Some text. Some text. Some text.</p>
+          </div>
+        </div>
+    </div>
+
+</body>
+</html> 

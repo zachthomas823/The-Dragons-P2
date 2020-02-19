@@ -1,0 +1,40 @@
+Name:         html-server
+Namespace:    default
+Priority:     0
+Node:         <none>
+Labels:       app=zach-html
+Annotations:  <none>
+Status:       Pending
+IP:           
+IPs:          <none>
+Containers:
+  zach-html:
+    Image:      zachthomas823/server
+    Port:       4000/TCP
+    Host Port:  0/TCP
+    Limits:
+      cpu:     500m
+      memory:  128Mi
+    Requests:
+      cpu:        500m
+      memory:     128Mi
+    Environment:  <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from default-token-fvgpv (ro)
+Conditions:
+  Type           Status
+  PodScheduled   False 
+Volumes:
+  default-token-fvgpv:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  default-token-fvgpv
+    Optional:    false
+QoS Class:       Guaranteed
+Node-Selectors:  <none>
+Tolerations:     node.kubernetes.io/not-ready:NoExecute for 300s
+                 node.kubernetes.io/unreachable:NoExecute for 300s
+Events:
+  Type     Reason            Age        From               Message
+  ----     ------            ----       ----               -------
+  Warning  FailedScheduling  <unknown>  default-scheduler  0/1 nodes are available: 1 node(s) had taints that the pod didn't tolerate.
+  Warning  FailedScheduling  <unknown>  default-scheduler  0/1 nodes are available: 1 node(s) had taints that the pod didn't tolerate.
