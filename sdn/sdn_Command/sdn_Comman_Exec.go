@@ -1,29 +1,31 @@
 package main
 
 import (
-	"net"
 	"fmt"
 	"io/ioutil"
+	"net"
 	"os"
 	"os/exec"
 	"strings"
+	"sync"
+	"time"
 )
 
+var mu sync.Mutex
+
 func main() {
+	go commandListener()
 
-	commandFile, _ := os.OpenFile("../commandlist", os.O_RDWR|os.O_CREATE, 7777)
-	defer commandFile.Close()
-
-	go commandListener(commandFile)
-
-	readCommands(commandFile)
+	readCommands()
 }
 
-func readCommands(commandFile *os.File){
-	for{
+func readCommands() {
+	for {
+		commandFile, _ := os.OpenFile("../commandlist", os.O_RDWR|os.O_CREATE, 7777)
+		mu.Lock()
 		AllBytes, _ := ioutil.ReadAll(commandFile)
-		//BUG SPLAT: Possible command loss
 		commandFile.Truncate(0)
+		mu.Unlock()
 		Lines := strings.Split(string(AllBytes), "\n")
 
 		for _, v := range Lines {
@@ -32,26 +34,29 @@ func readCommands(commandFile *os.File){
 			out, _ := exec.Command(command[0], command[1:]...).Output()
 			fmt.Print(string(out))
 		}
+		time.Sleep(5 * time.Second)
 	}
 }
-func commandListener(commandFile *os.File){
+
+func commandListener() {
 	//Pipe to control connection flow
+	commandFile, _ := os.OpenFile("../commandlist", os.O_RDWR|os.O_CREATE, 7777)
 	conPipe := make(chan string)
 
 	ls, err := net.Listen("tcp", ":8080")
 	defer ls.Close()
-	if err != nil{
+	if err != nil {
 		fmt.Printf("Listen Error: %s", err)
 	}
-	
+
 	//Cycle for loop as connections are made
-	for{
+	for {
 		go commandConnection(ls, conPipe, commandFile)
 		<-conPipe
 	}
 }
-func commandConnection(ls net.Listener, conPipe chan string, commandFile *os.File){
 
+func commandConnection(ls net.Listener, conPipe chan string, commandFile *os.File) {
 	con, err := ls.Accept()
 	defer con.Close()
 	conPipe <- "Connection made"
@@ -62,7 +67,8 @@ func commandConnection(ls net.Listener, conPipe chan string, commandFile *os.Fil
 
 	buf := make([]byte, 1024)
 	con.Read(buf)
-	
+
+	mu.Lock()
 	commandFile.Write(buf)
+	mu.Unlock()
 }
- 

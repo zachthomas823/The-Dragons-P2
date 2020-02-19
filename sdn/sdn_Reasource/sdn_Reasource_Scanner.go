@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"io/ioutil"
+	"os"
 	"os/exec"
 	"strings"
 	"time"
@@ -24,6 +25,7 @@ type Pod struct {
 	Status   string
 	Restarts string
 	Age      string
+	Port     string
 }
 
 type Service struct {
@@ -106,7 +108,18 @@ func GetPods() {
 			z = temp
 
 			if len(z) != 0 {
-				NewPod = Pod{Name: z[0], Ready: z[1], Status: z[2], Restarts: z[3], Age: z[4]}
+				descrip, _ := exec.Command("kubectl", "describe", "pods", z[0]).Output()
+				descripfile, _ := os.OpenFile("./pods", os.O_RDWR|os.O_CREATE, 7777)
+				descripfile.Write(descrip)
+
+				grepport, _ := exec.Command("grep", "Port:", "./pods").Output()
+				grepportslice := strings.Split(string(grepport), "\n")
+				grepportslice = strings.Split(string(grepportslice[0]), " ")
+
+				port := grepportslice[len(grepportslice)-1]
+				portslice := strings.Split(port, "/")
+
+				NewPod = Pod{Name: z[0], Ready: z[1], Status: z[2], Restarts: z[3], Age: z[4], Port: portslice[0]}
 				TempPodList = append(TempPodList, NewPod)
 			}
 

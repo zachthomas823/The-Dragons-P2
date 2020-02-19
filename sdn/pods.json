@@ -4,6 +4,7 @@
 		"Ready": "0/1",
 		"Status": "Pending",
 		"Restarts": "0",
-		"Age": "12m"
+		"Age": "17m",
+		"Port": "4000"
 	}
 ]
