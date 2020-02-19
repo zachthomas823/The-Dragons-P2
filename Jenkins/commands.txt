@@ -1,0 +1,9 @@
+sudo ssh -i ./basekey.pem ubuntu@3.20.240.178
+sudo docker run --rm -p 8082:9090 --name balancer --network my-net balancer
+sudo docker run -p 80:8080 -p 50000:50000 jenkins/jenkins:lts
+
+sudo ssh -i ./basekey.pem ubuntu@3.15.16.179
+
+docker tag local-image:tagname new-repo:tagname
+docker push new-repo:tagname
+
