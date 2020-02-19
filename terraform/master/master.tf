@@ -7,7 +7,7 @@ provider "aws" {
 }
 
 resource "aws_instance" "master" {
-  ami           = "ami-0fc20dd1da406780b"
+  ami           = "ami-003e085bc4c819984"
   instance_type = "t2.medium"
 
   #Generate your own Key_Name from AWS and use that here
@@ -25,9 +25,11 @@ resource "aws_instance" "master" {
 
   provisioner "remote-exec" {
     inline = [
-      "mkdir pods",
       "mkdir services",
-    ]
+      "mkdir terraform",
+      "mkdir terraform/worker",
+      "mkdir terraform/worker/worker_as",
+      ]
   }
 
   provisioner "file" {
@@ -35,20 +37,12 @@ resource "aws_instance" "master" {
     destination = "/tmp/setup_master.sh"
   }
   provisioner "file" {
-    source      = "../../kubernetes/services/client-server.yaml"
-    destination = "/home/ubuntu/services/client-server.yaml"
-  }
-  provisioner "file" {
-    source      = "../../kubernetes/pods/html-server.yaml"
-    destination = "/home/ubuntu/pods/html-server.yaml"
-  }
-  provisioner "file" {
     source      = "../worker/worker_as/worker_as.tf"
-    destination = "/home/ubuntu/terraform/worker.tf"
+    destination = "/home/ubuntu/terraform/worker/worker_as/worker.tf"
   }
   provisioner "file" {
     source      = "master.tf"
-    destination = "/home/ubuntu/terraform/master.tf"
+    destination = "/home/ubuntu/terraform/master/master.tf"
   }
   provisioner "file" {
     source      = "../secret_key"
@@ -70,10 +64,21 @@ resource "aws_instance" "master" {
     source      = "../../sdn"
     destination = "/home/ubuntu/sdn"
   }
+  provisioner "file" {
+    source = "terraform"
+    destination = "/home/ubuntu/terraform/terraform"
+  }
 
   provisioner "remote-exec" {
     inline = [
       "sudo /bin/bash /tmp/setup_master.sh",
+      "cd terraform",
+      # "unzip terraform_0.12.20_linux_amd64.zip",
+      "sudo chmod 777 terraform",
+      "sudo mv terraform /usr/local/bin",
+      "cd worker/worker_as",
+      "sudo terraform init",
+      "sudo terraform apply --auto-approve"
     ]
   }
 }
