@@ -1,0 +1,7 @@
+FROM ubuntu
+WORKDIR /app
+COPY ../sdn /app
+COPY ../dashboard dest
+EXPOSE 4000
+EXPOSE 8081
+CMD [ "./sdn/run.sh" ]

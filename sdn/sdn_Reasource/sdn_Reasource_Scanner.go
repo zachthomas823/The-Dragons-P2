@@ -38,9 +38,19 @@ type Service struct {
 	Age        string
 }
 
+type Deployment struct {
+	Name        string
+	Ready       string
+	UpToDate    string
+	Available   string
+	Age         string
+	Description string
+}
+
 func main() {
 	go GetNodes()
 	go GetPods()
+	go GetDeployments()
 	GetServices()
 }
 
@@ -167,6 +177,47 @@ func GetServices() {
 		byteslice, _ := json.MarshalIndent(TempNewServiceList, "", "	")
 
 		ioutil.WriteFile("../services.json", byteslice, 7777)
+
+		time.Sleep(TIMETOSLEEP)
+	}
+}
+
+func GetDeployments() {
+	for {
+		var NewDeployment Deployment
+		var TempNewDeploymentList []Deployment
+
+		output, _ := exec.Command("kubectl", "get", "deployments").Output()
+
+		t := strings.Split(string(output), "\n")
+		t = t[1:]
+
+		for _, v := range t {
+			z := strings.Split(v, " ")
+
+			var temp []string
+
+			for k2, v2 := range z {
+				z[k2] = strings.TrimSpace(v2)
+				if z[k2] != "" {
+					temp = append(temp, z[k2])
+				}
+			}
+
+			z = temp
+
+			if len(z) != 0 {
+				descrip, _ := exec.Command("kubectl", "describe", "deployments", z[0]).Output()
+
+				NewDeployment = Deployment{Name: z[0], Ready: z[1], UpToDate: z[2], Available: z[3], Age: z[4], Description: string(descrip)}
+				TempNewDeploymentList = append(TempNewDeploymentList, NewDeployment)
+			}
+
+		}
+
+		byteslice, _ := json.MarshalIndent(TempNewDeploymentList, "", "	")
+
+		ioutil.WriteFile("../deployments.json", byteslice, 7777)
 
 		time.Sleep(TIMETOSLEEP)
 	}

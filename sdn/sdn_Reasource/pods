@@ -30,8 +30,11 @@ Node-Selectors:  <none>
 Tolerations:     node.kubernetes.io/not-ready:NoExecute for 300s
                  node.kubernetes.io/unreachable:NoExecute for 300s
 Events:
-  Type     Reason            Age        From               Message
-  ----     ------            ----       ----               -------
-  Warning  FailedScheduling  <unknown>  default-scheduler  0/1 nodes are available: 1 node(s) had taints that the pod didn't tolerate.
-  Warning  FailedScheduling  <unknown>  default-scheduler  0/1 nodes are available: 1 node(s) had taints that the pod didn't tolerate.
+  Type     Reason            Age                 From               Message
+  ----     ------            ----                ----               -------
+  Warning  FailedScheduling  <unknown>           default-scheduler  0/1 nodes are available: 1 node(s) had taints that the pod didn't tolerate.
+  Warning  FailedScheduling  15m (x34 over 63m)  default-scheduler  0/1 nodes are available: 1 node(s) had taints that the pod didn't tolerate.
+  Warning  FailedScheduling  4s (x9 over 11m)    default-scheduler  0/1 nodes are available: 1 node(s) had taints that the pod didn't tolerate.
  are available: 1 node(s) had taints that the pod didn't tolerate.
+ate.
+ate.

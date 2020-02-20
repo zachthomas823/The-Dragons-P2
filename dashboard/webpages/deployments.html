@@ -11,17 +11,13 @@
         <div class="w3-col w3-panel w3-blue w3-card-4" style="width:50%">
             
             <div class="w3-center">
-                <h1>Pods</h1>
+                <h1>Deployments</h1>
             </div>
         </div>
     </div>
-    
-    
-
-    
 
     <div class="w3-row">
-        {{range $index, $element := .Podlist}}
+        {{range $index, $element := .DeploymentList}}
 
         <div class=" w3-col" style="width:3.3%">&nbsp</div>
 
@@ -33,7 +29,7 @@
             </div>
             <div class="w3-row">
                 <div>
-                    <h1>{{$element.Port}}</h1>
+                    <h1>{{$element.Ready}}</h1>
                 </div>
             </div>
         </div>
@@ -57,9 +53,9 @@
             <div class="w3-container">
                 <div class="w3-container w3-green">
                     <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
-                    <h2>Create A New Pod</h2>
+                    <h2>Create A New Deployment</h2>
                 </div>
-                <form action="/" method="POST">
+                <form action="/deployments" method="POST">
                     <h2>Pod Name</h2>
                     <input id="cmdInput" type="text" name="name" placeholder="Enter command"><br><br>
                     <h2>Docker Image</h2>

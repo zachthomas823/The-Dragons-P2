@@ -20,7 +20,7 @@ var PublicIP string
 func main() {
 	fmt.Println("Software Defined Network Terminal")
 	go GrabServers()
-	go StartReverseProxy("8080")
+	go StartReverseProxy("4000")
 	<-shutdownchan
 	fmt.Println("Shuting Down...")
 }

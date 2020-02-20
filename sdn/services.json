@@ -5,7 +5,7 @@
 		"ClusterIP": "10.110.163.218",
 		"ExternalIP": "\u003cnone\u003e",
 		"Port": "4000:30590/TCP",
-		"Age": "88s"
+		"Age": "20h"
 	},
 	{
 		"Name": "joseph",
@@ -13,7 +13,7 @@
 		"ClusterIP": "10.99.25.104",
 		"ExternalIP": "\u003cnone\u003e",
 		"Port": "4000:30509/TCP",
-		"Age": "67m"
+		"Age": "21h"
 	},
 	{
 		"Name": "kubernetes",
@@ -21,7 +21,7 @@
 		"ClusterIP": "10.96.0.1",
 		"ExternalIP": "\u003cnone\u003e",
 		"Port": "443/TCP",
-		"Age": "2d11h"
+		"Age": "3d8h"
 	},
 	{
 		"Name": "neo",
@@ -29,7 +29,15 @@
 		"ClusterIP": "10.110.191.29",
 		"ExternalIP": "\u003cnone\u003e",
 		"Port": "4000:30319/TCP",
-		"Age": "65m"
+		"Age": "21h"
+	},
+	{
+		"Name": "wowtest",
+		"Type": "NodePort",
+		"ClusterIP": "10.96.212.151",
+		"ExternalIP": "\u003cnone\u003e",
+		"Port": "4000:31397/TCP",
+		"Age": "85s"
 	},
 	{
 		"Name": "zach",
@@ -37,6 +45,6 @@
 		"ClusterIP": "10.110.43.247",
 		"ExternalIP": "\u003cnone\u003e",
 		"Port": "4000:31136/TCP",
-		"Age": "72m"
+		"Age": "21h"
 	}
 ]
