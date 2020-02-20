@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"net"
 	"net/http"
+	"strings"
 	"text/template"
 	"time"
 )
@@ -70,7 +71,7 @@ func Deployments(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if r.Method == "POST" {
-		inputname := r.FormValue("name")
+		inputname := strings.ToLower(r.FormValue("name"))
 		inputimage := r.FormValue("image")
 		inputport := r.FormValue("port")
 		inputidentifier := r.FormValue("identifier")

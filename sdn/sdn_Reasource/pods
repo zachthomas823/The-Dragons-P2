@@ -1,17 +1,17 @@
-Name:           daniel-66677d5b5f-4ggtw
+Name:           wowtesting-7558656c97-6bw48
 Namespace:      default
 Priority:       0
 Node:           <none>
-Labels:         pod-template-hash=66677d5b5f
-                run=daniel
+Labels:         pod-template-hash=7558656c97
+                run=wowtesting
 Annotations:    <none>
 Status:         Pending
 IP:             
 IPs:            <none>
-Controlled By:  ReplicaSet/daniel-66677d5b5f
+Controlled By:  ReplicaSet/wowtesting-7558656c97
 Containers:
-  daniel:
-    Image:        zachthomas823/server2
+  wowtesting:
+    Image:        zachthomas823/server
     Port:         4000/TCP
     Host Port:    0/TCP
     Environment:  <none>
@@ -32,8 +32,10 @@ Tolerations:     node.kubernetes.io/not-ready:NoExecute for 300s
 Events:
   Type     Reason            Age                 From               Message
   ----     ------            ----                ----               -------
-  Warning  FailedScheduling  <unknown>           default-scheduler  0/1 nodes are available: 1 node(s) had taints that the pod didn't tolerate.
-  Warning  FailedScheduling  15m (x34 over 63m)  default-scheduler  0/1 nodes are available: 1 node(s) had taints that the pod didn't tolerate.
+  Warning  FailedScheduling  61s (x22 over 27m)  default-scheduler  0/1 nodes are available: 1 node(s) had taints that the pod didn't tolerate.
+he pod didn't tolerate.
+e.
+ 63m)  default-scheduler  0/1 nodes are available: 1 node(s) had taints that the pod didn't tolerate.
   Warning  FailedScheduling  4s (x9 over 11m)    default-scheduler  0/1 nodes are available: 1 node(s) had taints that the pod didn't tolerate.
  are available: 1 node(s) had taints that the pod didn't tolerate.
 ate.
