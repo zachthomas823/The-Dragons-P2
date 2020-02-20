@@ -1,7 +1,9 @@
 provider "aws" {
-    access_key = "${file("./access_key.txt")}"
-    secret_key = "${file("./secret_key.txt")}"
-    region     = "us-east-2"
+  #Two localfiles names as such. Each contains what they say, given to you from AWS.
+  #DO NOT UPLOAD THESE FILES, make sure they are masked by the .gitignore
+  access_key = "AKIAWUGRQXZRTQRQX3YE"
+  secret_key = "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"
+  region     = "us-east-2"
 }
 
 
@@ -14,14 +16,40 @@ resource "aws_instance" "Jenkins" {
     connection {
     user = "ubuntu"
     type = "ssh"
-    private_key = "${file("./basekey.pem")}"
+    private_key = file("./basekey.pem")
     host =  self.public_ip
-    timeout = "4m"
+    timeout = "10m"
+    }
+    provisioner "remote-exec" {
+        inline = [
+            "mkdir /home/ubuntu/terraform",
+        ]
     }
 
     provisioner "file" {
         source      = "setup_jenkins.sh"
         destination = "/tmp/setup_jenkins.sh"
+    }
+
+    provisioner "file" {
+        source      = "terraform"
+        destination = "/home/ubuntu/terraform/terraform"
+    }
+    provisioner "file" {
+        source      = "access_key"
+        destination = "/home/ubuntu/terraform/access_key"
+    }
+    provisioner "file" {
+        source      = "secret_key"
+        destination = "/home/ubuntu/terraform/secret_key"
+    }
+    provisioner "file" {
+        source      = "basekey.pem"
+        destination = "/home/ubuntu/terraform/basekey.pem"
+    }
+    provisioner "file" {
+        source = "tester/test.tf"
+        destination = "/home/ubuntu/terraform/test.tf"
     }
 
 

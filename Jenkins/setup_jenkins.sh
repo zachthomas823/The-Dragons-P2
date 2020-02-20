@@ -23,7 +23,10 @@ sudo apt-get update
 #Install Docker
 sudo apt-get -y install docker-ce docker-ce-cli containerd.io
 
+#Unpack Terraform
+sudo chmod 777 /home/ubuntu/terraform/terraform
+sudo mv /home/ubuntu/terraform/terraform /usr/local/bin
+
 #Start Jenkins
 sudo docker run --name Jenkins --rm -d -p 80:8080 -p 50000:50000 jenkins/jenkins:lts
 
-echo `sudo docker logs Jenkins`
