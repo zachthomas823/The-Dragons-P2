@@ -12,11 +12,12 @@ import (
 const TIMETOSLEEP = 10 * time.Second
 
 type Node struct {
-	Name    string
-	Status  string
-	Roles   string
-	Age     string
-	Version string
+	Name        string
+	Status      string
+	Roles       string
+	Age         string
+	Version     string
+	Description string
 }
 
 type Pod struct {
@@ -30,12 +31,13 @@ type Pod struct {
 }
 
 type Service struct {
-	Name       string
-	Type       string
-	ClusterIP  string
-	ExternalIP string
-	Port       string
-	Age        string
+	Name        string
+	Type        string
+	ClusterIP   string
+	ExternalIP  string
+	Port        string
+	Age         string
+	Description string
 }
 
 type Deployment struct {
@@ -79,7 +81,9 @@ func GetNodes() {
 			z = temp
 
 			if len(z) != 0 {
-				NewNode = Node{Name: z[0], Status: z[1], Roles: z[2], Age: z[3], Version: z[4]}
+				descrip, _ := exec.Command("kubectl", "describe", "nodes", z[0]).Output()
+
+				NewNode = Node{Name: z[0], Status: z[1], Roles: z[2], Age: z[3], Version: z[4], Description: string(descrip)}
 				TempNodesList = append(TempNodesList, NewNode)
 			}
 
@@ -168,7 +172,9 @@ func GetServices() {
 			z = temp
 
 			if len(z) != 0 {
-				NewService = Service{Name: z[0], Type: z[1], ClusterIP: z[2], ExternalIP: z[3], Port: z[4], Age: z[5]}
+				descrip, _ := exec.Command("kubectl", "describe", "svc", z[0]).Output()
+
+				NewService = Service{Name: z[0], Type: z[1], ClusterIP: z[2], ExternalIP: z[3], Port: z[4], Age: z[5], Description: string(descrip)}
 				TempNewServiceList = append(TempNewServiceList, NewService)
 			}
 

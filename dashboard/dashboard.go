@@ -71,21 +71,22 @@ func Deployments(w http.ResponseWriter, r *http.Request) {
 
 	if r.Method == "POST" {
 		inputname := r.FormValue("name")
-		fmt.Println(inputname)
 		inputimage := r.FormValue("image")
-		fmt.Println(inputimage)
 		inputport := r.FormValue("port")
-		fmt.Println(inputport)
+		inputidentifier := r.FormValue("identifier")
 		conn, err := net.Dial("tcp", ":8080")
 		if err != nil {
 			fmt.Println(err)
 		}
-		fmt.Println(inputname)
 		conn.Write([]byte("kubectl run " + inputname + " --image=" + inputimage + " --port=" + inputport + "\n"))
 		conn.Close()
 
 		conn, _ = net.Dial("tcp", ":8080")
-		conn.Write([]byte("kubectl expose deployment " + inputname + " --type=NodePort --name=" + inputname))
+		conn.Write([]byte("kubectl expose deployment " + inputname + " --type=NodePort --name=" + inputname + "\n"))
+		conn.Close()
+
+		conn, _ = net.Dial("tcp", ":8080")
+		conn.Write([]byte(inputidentifier))
 		conn.Close()
 	}
 
