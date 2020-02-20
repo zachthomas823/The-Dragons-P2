@@ -64,10 +64,10 @@ resource "aws_instance" "master" {
     source      = "../../sdn"
     destination = "/home/ubuntu/sdn"
   }
-  # provisioner "file" {
-  #   source      = "../../dashboard"
-  #   destination = "/home/ubuntu/dashboard"
-  # }
+  provisioner "file" {
+    source      = "../../dashboard"
+    destination = "/home/ubuntu/dashboard"
+  }
   provisioner "file" {
     source = "terraform"
     destination = "/home/ubuntu/terraform/terraform"
@@ -87,7 +87,10 @@ resource "aws_instance" "master" {
       "sudo chmod 777 join.sh",
       "kubeadm token create --print-join-command >> join.sh",
       "terraform init",
-      "terraform apply --auto-approve"
+      "terraform apply --auto-approve",
+      "cd ../../../sdn",
+      "chmod 777 run.sh",
+      "./run.sh"
     ]
   }
 }
@@ -111,3 +114,9 @@ resource "aws_instance" "master" {
     cidr_blocks     = ["0.0.0.0/0"]
   }
 }
+
+    # backend "s3" {
+    #     bucket = "the-dragons-master-bucket"
+    #     key    = "terraform.tfstate"
+    #     region = "us-east-2"
+    # }
