@@ -1,23 +1,19 @@
-Name:         html-server
-Namespace:    default
-Priority:     0
-Node:         <none>
-Labels:       app=zach-html
-Annotations:  <none>
-Status:       Pending
-IP:           
-IPs:          <none>
+Name:           daniel-66677d5b5f-4ggtw
+Namespace:      default
+Priority:       0
+Node:           <none>
+Labels:         pod-template-hash=66677d5b5f
+                run=daniel
+Annotations:    <none>
+Status:         Pending
+IP:             
+IPs:            <none>
+Controlled By:  ReplicaSet/daniel-66677d5b5f
 Containers:
-  zach-html:
-    Image:      zachthomas823/server
-    Port:       4000/TCP
-    Host Port:  0/TCP
-    Limits:
-      cpu:     500m
-      memory:  128Mi
-    Requests:
-      cpu:        500m
-      memory:     128Mi
+  daniel:
+    Image:        zachthomas823/server2
+    Port:         4000/TCP
+    Host Port:    0/TCP
     Environment:  <none>
     Mounts:
       /var/run/secrets/kubernetes.io/serviceaccount from default-token-fvgpv (ro)
@@ -29,7 +25,7 @@ Volumes:
     Type:        Secret (a volume populated by a Secret)
     SecretName:  default-token-fvgpv
     Optional:    false
-QoS Class:       Guaranteed
+QoS Class:       BestEffort
 Node-Selectors:  <none>
 Tolerations:     node.kubernetes.io/not-ready:NoExecute for 300s
                  node.kubernetes.io/unreachable:NoExecute for 300s
@@ -38,3 +34,4 @@ Events:
   ----     ------            ----       ----               -------
   Warning  FailedScheduling  <unknown>  default-scheduler  0/1 nodes are available: 1 node(s) had taints that the pod didn't tolerate.
   Warning  FailedScheduling  <unknown>  default-scheduler  0/1 nodes are available: 1 node(s) had taints that the pod didn't tolerate.
+ are available: 1 node(s) had taints that the pod didn't tolerate.
