@@ -71,6 +71,7 @@ func readCommands() {
 						json.Unmarshal(openFile, &maps)
 
 						temp := Lines[k+1]
+
 						maps[string(temp)] = l[1]
 
 						bytestowrite, _ := json.MarshalIndent(maps, "", "	")
