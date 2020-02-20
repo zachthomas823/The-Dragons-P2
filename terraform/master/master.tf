@@ -15,6 +15,10 @@ resource "aws_instance" "master" {
   key_name = "Temp"
   security_groups = [aws_security_group.SSH.name]
 
+  lifecycle {
+    create_before_destroy = true
+  }
+
   connection {
     user = "ubuntu"
     type = "ssh"
@@ -86,7 +90,7 @@ resource "aws_instance" "master" {
       "cd worker/worker_as",
       "sudo chmod 777 join.sh",
       "kubeadm token create --print-join-command >> join.sh",
-      "terraform init",
+      "terraform init --auto-approve",
       "terraform apply --auto-approve",
       "cd ../../../sdn",
       "chmod 777 run.sh",
@@ -115,8 +119,10 @@ resource "aws_instance" "master" {
   }
 }
 
-    # backend "s3" {
-    #     bucket = "the-dragons-master-bucket"
-    #     key    = "terraform.tfstate"
-    #     region = "us-east-2"
-    # }
+terraform {
+  backend "s3" {
+      bucket = "the-dragons-master"
+      key    = "terraform.tfstate"
+      region = "us-east-2"
+  }
+}

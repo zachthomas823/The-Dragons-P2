@@ -65,3 +65,7 @@ chown -R ubuntu:ubuntu /home/ubuntu/.kube
 kubectl create -f https://docs.projectcalico.org/v3.11/manifests/calico.yaml
 
 iptables -P FORWARD ACCEPT
+
+# Add keys to environmental variable
+export AWS_ACCESS_KEY_ID="$(cat access_key | tr -d "\t\n\t")"
+export AWS_SECRET_ACCESS_KEY="$(cat secret_key | tr -d "\t\n\t")"
