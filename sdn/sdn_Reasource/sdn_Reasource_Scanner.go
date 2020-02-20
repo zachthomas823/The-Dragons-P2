@@ -20,12 +20,13 @@ type Node struct {
 }
 
 type Pod struct {
-	Name     string
-	Ready    string
-	Status   string
-	Restarts string
-	Age      string
-	Port     string
+	Name        string
+	Ready       string
+	Status      string
+	Restarts    string
+	Age         string
+	Port        string
+	Description string
 }
 
 type Service struct {
@@ -40,8 +41,7 @@ type Service struct {
 func main() {
 	go GetNodes()
 	go GetPods()
-	go GetServices()
-	time.Sleep(TIMETOSLEEP)
+	GetServices()
 }
 
 func GetNodes() {
@@ -119,7 +119,7 @@ func GetPods() {
 				port := grepportslice[len(grepportslice)-1]
 				portslice := strings.Split(port, "/")
 
-				NewPod = Pod{Name: z[0], Ready: z[1], Status: z[2], Restarts: z[3], Age: z[4], Port: portslice[0]}
+				NewPod = Pod{Name: z[0], Ready: z[1], Status: z[2], Restarts: z[3], Age: z[4], Port: portslice[0], Description: string(descrip)}
 				TempPodList = append(TempPodList, NewPod)
 			}
 

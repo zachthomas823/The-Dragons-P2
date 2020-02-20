@@ -1,10 +1,92 @@
 [
 	{
-		"Name": "html-server",
+		"Name": "daniel-66677d5b5f-4ggtw",
 		"Ready": "0/1",
 		"Status": "Pending",
 		"Restarts": "0",
-		"Age": "17m",
-		"Port": "4000"
+		"Age": "60m",
+		"Port": "4000",
+		"Description": "Name:           daniel-66677d5b5f-4ggtw\nNamespace:      default\nPriority:       0\nNode:           \u003cnone\u003e\nLabels:         pod-template-hash=66677d5b5f\n                run=daniel\nAnnotations:    \u003cnone\u003e\nStatus:         Pending\nIP:             \nIPs:            \u003cnone\u003e\nControlled By:  ReplicaSet/daniel-66677d5b5f\nContainers:\n  daniel:\n    Image:        zachthomas823/server2\n    Port:         4000/TCP\n    Host Port:    0/TCP\n    Environment:  \u003cnone\u003e\n    Mounts:\n      /var/run/secrets/kubernetes.io/serviceaccount from default-token-fvgpv (ro)\nConditions:\n  Type           Status\n  PodScheduled   False \nVolumes:\n  default-token-fvgpv:\n    Type:        Secret (a volume populated by a Secret)\n    SecretName:  default-token-fvgpv\n    Optional:    false\nQoS Class:       BestEffort\nNode-Selectors:  \u003cnone\u003e\nTolerations:     node.kubernetes.io/not-ready:NoExecute for 300s\n                 node.kubernetes.io/unreachable:NoExecute for 300s\nEvents:\n  Type     Reason            Age        From               Message\n  ----     ------            ----       ----               -------\n  Warning  FailedScheduling  \u003cunknown\u003e  default-scheduler  0/1 nodes are available: 1 node(s) had taints that the pod didn't tolerate.\n  Warning  FailedScheduling  \u003cunknown\u003e  default-scheduler  0/1 nodes are available: 1 node(s) had taints that the pod didn't tolerate.\n"
+	},
+	{
+		"Name": "daniel2-6bdbdfd7c5-2q5pd",
+		"Ready": "0/1",
+		"Status": "Pending",
+		"Restarts": "0",
+		"Age": "58m",
+		"Port": "4000",
+		"Description": "Name:           daniel2-6bdbdfd7c5-2q5pd\nNamespace:      default\nPriority:       0\nNode:           \u003cnone\u003e\nLabels:         pod-template-hash=6bdbdfd7c5\n                run=daniel2\nAnnotations:    \u003cnone\u003e\nStatus:         Pending\nIP:             \nIPs:            \u003cnone\u003e\nControlled By:  ReplicaSet/daniel2-6bdbdfd7c5\nContainers:\n  daniel2:\n    Image:        zachthomas823/server\n    Port:         4000/TCP\n    Host Port:    0/TCP\n    Environment:  \u003cnone\u003e\n    Mounts:\n      /var/run/secrets/kubernetes.io/serviceaccount from default-token-fvgpv (ro)\nConditions:\n  Type           Status\n  PodScheduled   False \nVolumes:\n  default-token-fvgpv:\n    Type:        Secret (a volume populated by a Secret)\n    SecretName:  default-token-fvgpv\n    Optional:    false\nQoS Class:       BestEffort\nNode-Selectors:  \u003cnone\u003e\nTolerations:     node.kubernetes.io/not-ready:NoExecute for 300s\n                 node.kubernetes.io/unreachable:NoExecute for 300s\nEvents:\n  Type     Reason            Age        From               Message\n  ----     ------            ----       ----               -------\n  Warning  FailedScheduling  \u003cunknown\u003e  default-scheduler  0/1 nodes are available: 1 node(s) had taints that the pod didn't tolerate.\n  Warning  FailedScheduling  \u003cunknown\u003e  default-scheduler  0/1 nodes are available: 1 node(s) had taints that the pod didn't tolerate.\n"
+	},
+	{
+		"Name": "joseph-65fbb9c55f-8tmrq",
+		"Ready": "0/1",
+		"Status": "Pending",
+		"Restarts": "0",
+		"Age": "67m",
+		"Port": "4000",
+		"Description": "Name:           joseph-65fbb9c55f-8tmrq\nNamespace:      default\nPriority:       0\nNode:           \u003cnone\u003e\nLabels:         pod-template-hash=65fbb9c55f\n                run=joseph\nAnnotations:    \u003cnone\u003e\nStatus:         Pending\nIP:             \nIPs:            \u003cnone\u003e\nControlled By:  ReplicaSet/joseph-65fbb9c55f\nContainers:\n  joseph:\n    Image:        zachthomas823/server2\n    Port:         4000/TCP\n    Host Port:    0/TCP\n    Environment:  \u003cnone\u003e\n    Mounts:\n      /var/run/secrets/kubernetes.io/serviceaccount from default-token-fvgpv (ro)\nConditions:\n  Type           Status\n  PodScheduled   False \nVolumes:\n  default-token-fvgpv:\n    Type:        Secret (a volume populated by a Secret)\n    SecretName:  default-token-fvgpv\n    Optional:    false\nQoS Class:       BestEffort\nNode-Selectors:  \u003cnone\u003e\nTolerations:     node.kubernetes.io/not-ready:NoExecute for 300s\n                 node.kubernetes.io/unreachable:NoExecute for 300s\nEvents:\n  Type     Reason            Age        From               Message\n  ----     ------            ----       ----               -------\n  Warning  FailedScheduling  \u003cunknown\u003e  default-scheduler  0/1 nodes are available: 1 node(s) had taints that the pod didn't tolerate.\n"
+	},
+	{
+		"Name": "killme-59976d6df9-jpr6z",
+		"Ready": "0/1",
+		"Status": "Pending",
+		"Restarts": "0",
+		"Age": "47m",
+		"Port": "4000",
+		"Description": "Name:           killme-59976d6df9-jpr6z\nNamespace:      default\nPriority:       0\nNode:           \u003cnone\u003e\nLabels:         pod-template-hash=59976d6df9\n                run=killme\nAnnotations:    \u003cnone\u003e\nStatus:         Pending\nIP:             \nIPs:            \u003cnone\u003e\nControlled By:  ReplicaSet/killme-59976d6df9\nContainers:\n  killme:\n    Image:        zachthomas823/server2\n    Port:         4000/TCP\n    Host Port:    0/TCP\n    Environment:  \u003cnone\u003e\n    Mounts:\n      /var/run/secrets/kubernetes.io/serviceaccount from default-token-fvgpv (ro)\nConditions:\n  Type           Status\n  PodScheduled   False \nVolumes:\n  default-token-fvgpv:\n    Type:        Secret (a volume populated by a Secret)\n    SecretName:  default-token-fvgpv\n    Optional:    false\nQoS Class:       BestEffort\nNode-Selectors:  \u003cnone\u003e\nTolerations:     node.kubernetes.io/not-ready:NoExecute for 300s\n                 node.kubernetes.io/unreachable:NoExecute for 300s\nEvents:\n  Type     Reason            Age        From               Message\n  ----     ------            ----       ----               -------\n  Warning  FailedScheduling  \u003cunknown\u003e  default-scheduler  0/1 nodes are available: 1 node(s) had taints that the pod didn't tolerate.\n  Warning  FailedScheduling  \u003cunknown\u003e  default-scheduler  0/1 nodes are available: 1 node(s) had taints that the pod didn't tolerate.\n"
+	},
+	{
+		"Name": "killyourself-748655cd77-l8x4g",
+		"Ready": "0/1",
+		"Status": "Pending",
+		"Restarts": "0",
+		"Age": "55m",
+		"Port": "4000",
+		"Description": "Name:           killyourself-748655cd77-l8x4g\nNamespace:      default\nPriority:       0\nNode:           \u003cnone\u003e\nLabels:         pod-template-hash=748655cd77\n                run=killyourself\nAnnotations:    \u003cnone\u003e\nStatus:         Pending\nIP:             \nIPs:            \u003cnone\u003e\nControlled By:  ReplicaSet/killyourself-748655cd77\nContainers:\n  killyourself:\n    Image:        zachthomas823/server\n    Port:         4000/TCP\n    Host Port:    0/TCP\n    Environment:  \u003cnone\u003e\n    Mounts:\n      /var/run/secrets/kubernetes.io/serviceaccount from default-token-fvgpv (ro)\nConditions:\n  Type           Status\n  PodScheduled   False \nVolumes:\n  default-token-fvgpv:\n    Type:        Secret (a volume populated by a Secret)\n    SecretName:  default-token-fvgpv\n    Optional:    false\nQoS Class:       BestEffort\nNode-Selectors:  \u003cnone\u003e\nTolerations:     node.kubernetes.io/not-ready:NoExecute for 300s\n                 node.kubernetes.io/unreachable:NoExecute for 300s\nEvents:\n  Type     Reason            Age        From               Message\n  ----     ------            ----       ----               -------\n  Warning  FailedScheduling  \u003cunknown\u003e  default-scheduler  0/1 nodes are available: 1 node(s) had taints that the pod didn't tolerate.\n  Warning  FailedScheduling  \u003cunknown\u003e  default-scheduler  0/1 nodes are available: 1 node(s) had taints that the pod didn't tolerate.\n"
+	},
+	{
+		"Name": "neo-5b5cff547c-d87k4",
+		"Ready": "0/1",
+		"Status": "Pending",
+		"Restarts": "0",
+		"Age": "64m",
+		"Port": "4000",
+		"Description": "Name:           neo-5b5cff547c-d87k4\nNamespace:      default\nPriority:       0\nNode:           \u003cnone\u003e\nLabels:         pod-template-hash=5b5cff547c\n                run=neo\nAnnotations:    \u003cnone\u003e\nStatus:         Pending\nIP:             \nIPs:            \u003cnone\u003e\nControlled By:  ReplicaSet/neo-5b5cff547c\nContainers:\n  neo:\n    Image:        zachthomas823/server\n    Port:         4000/TCP\n    Host Port:    0/TCP\n    Environment:  \u003cnone\u003e\n    Mounts:\n      /var/run/secrets/kubernetes.io/serviceaccount from default-token-fvgpv (ro)\nConditions:\n  Type           Status\n  PodScheduled   False \nVolumes:\n  default-token-fvgpv:\n    Type:        Secret (a volume populated by a Secret)\n    SecretName:  default-token-fvgpv\n    Optional:    false\nQoS Class:       BestEffort\nNode-Selectors:  \u003cnone\u003e\nTolerations:     node.kubernetes.io/not-ready:NoExecute for 300s\n                 node.kubernetes.io/unreachable:NoExecute for 300s\nEvents:\n  Type     Reason            Age        From               Message\n  ----     ------            ----       ----               -------\n  Warning  FailedScheduling  \u003cunknown\u003e  default-scheduler  0/1 nodes are available: 1 node(s) had taints that the pod didn't tolerate.\n"
+	},
+	{
+		"Name": "tester-7c75b6d6df-l56z2",
+		"Ready": "0/1",
+		"Status": "Pending",
+		"Restarts": "0",
+		"Age": "47m",
+		"Port": "4000",
+		"Description": "Name:           tester-7c75b6d6df-l56z2\nNamespace:      default\nPriority:       0\nNode:           \u003cnone\u003e\nLabels:         pod-template-hash=7c75b6d6df\n                run=tester\nAnnotations:    \u003cnone\u003e\nStatus:         Pending\nIP:             \nIPs:            \u003cnone\u003e\nControlled By:  ReplicaSet/tester-7c75b6d6df\nContainers:\n  tester:\n    Image:        zachthomas823/server\n    Port:         4000/TCP\n    Host Port:    0/TCP\n    Environment:  \u003cnone\u003e\n    Mounts:\n      /var/run/secrets/kubernetes.io/serviceaccount from default-token-fvgpv (ro)\nConditions:\n  Type           Status\n  PodScheduled   False \nVolumes:\n  default-token-fvgpv:\n    Type:        Secret (a volume populated by a Secret)\n    SecretName:  default-token-fvgpv\n    Optional:    false\nQoS Class:       BestEffort\nNode-Selectors:  \u003cnone\u003e\nTolerations:     node.kubernetes.io/not-ready:NoExecute for 300s\n                 node.kubernetes.io/unreachable:NoExecute for 300s\nEvents:\n  Type     Reason            Age        From               Message\n  ----     ------            ----       ----               -------\n  Warning  FailedScheduling  \u003cunknown\u003e  default-scheduler  0/1 nodes are available: 1 node(s) had taints that the pod didn't tolerate.\n  Warning  FailedScheduling  \u003cunknown\u003e  default-scheduler  0/1 nodes are available: 1 node(s) had taints that the pod didn't tolerate.\n"
+	},
+	{
+		"Name": "testing2-fd8444f9b-m89xj",
+		"Ready": "0/1",
+		"Status": "Pending",
+		"Restarts": "0",
+		"Age": "51m",
+		"Port": "4001",
+		"Description": "Name:           testing2-fd8444f9b-m89xj\nNamespace:      default\nPriority:       0\nNode:           \u003cnone\u003e\nLabels:         pod-template-hash=fd8444f9b\n                run=testing2\nAnnotations:    \u003cnone\u003e\nStatus:         Pending\nIP:             \nIPs:            \u003cnone\u003e\nControlled By:  ReplicaSet/testing2-fd8444f9b\nContainers:\n  testing2:\n    Image:        zachthomas823/server\n    Port:         4001/TCP\n    Host Port:    0/TCP\n    Environment:  \u003cnone\u003e\n    Mounts:\n      /var/run/secrets/kubernetes.io/serviceaccount from default-token-fvgpv (ro)\nConditions:\n  Type           Status\n  PodScheduled   False \nVolumes:\n  default-token-fvgpv:\n    Type:        Secret (a volume populated by a Secret)\n    SecretName:  default-token-fvgpv\n    Optional:    false\nQoS Class:       BestEffort\nNode-Selectors:  \u003cnone\u003e\nTolerations:     node.kubernetes.io/not-ready:NoExecute for 300s\n                 node.kubernetes.io/unreachable:NoExecute for 300s\nEvents:\n  Type     Reason            Age        From               Message\n  ----     ------            ----       ----               -------\n  Warning  FailedScheduling  \u003cunknown\u003e  default-scheduler  0/1 nodes are available: 1 node(s) had taints that the pod didn't tolerate.\n  Warning  FailedScheduling  \u003cunknown\u003e  default-scheduler  0/1 nodes are available: 1 node(s) had taints that the pod didn't tolerate.\n"
+	},
+	{
+		"Name": "zach-66dbf96569-s6phr",
+		"Ready": "0/1",
+		"Status": "Pending",
+		"Restarts": "0",
+		"Age": "71m",
+		"Port": "4000",
+		"Description": "Name:           zach-66dbf96569-s6phr\nNamespace:      default\nPriority:       0\nNode:           \u003cnone\u003e\nLabels:         pod-template-hash=66dbf96569\n                run=zach\nAnnotations:    \u003cnone\u003e\nStatus:         Pending\nIP:             \nIPs:            \u003cnone\u003e\nControlled By:  ReplicaSet/zach-66dbf96569\nContainers:\n  zach:\n    Image:        zachthomas823/server\n    Port:         4000/TCP\n    Host Port:    0/TCP\n    Environment:  \u003cnone\u003e\n    Mounts:\n      /var/run/secrets/kubernetes.io/serviceaccount from default-token-fvgpv (ro)\nConditions:\n  Type           Status\n  PodScheduled   False \nVolumes:\n  default-token-fvgpv:\n    Type:        Secret (a volume populated by a Secret)\n    SecretName:  default-token-fvgpv\n    Optional:    false\nQoS Class:       BestEffort\nNode-Selectors:  \u003cnone\u003e\nTolerations:     node.kubernetes.io/not-ready:NoExecute for 300s\n                 node.kubernetes.io/unreachable:NoExecute for 300s\nEvents:\n  Type     Reason            Age        From               Message\n  ----     ------            ----       ----               -------\n  Warning  FailedScheduling  \u003cunknown\u003e  default-scheduler  0/1 nodes are available: 1 node(s) had taints that the pod didn't tolerate.\n"
+	},
+	{
+		"Name": "zachisrudetomesometimes-555cfdf59f-dbdpg",
+		"Ready": "0/1",
+		"Status": "Pending",
+		"Restarts": "0",
+		"Age": "7m1s",
+		"Port": "4000",
+		"Description": "Name:           zachisrudetomesometimes-555cfdf59f-dbdpg\nNamespace:      default\nPriority:       0\nNode:           \u003cnone\u003e\nLabels:         pod-template-hash=555cfdf59f\n                run=zachisrudetomesometimes\nAnnotations:    \u003cnone\u003e\nStatus:         Pending\nIP:             \nIPs:            \u003cnone\u003e\nControlled By:  ReplicaSet/zachisrudetomesometimes-555cfdf59f\nContainers:\n  zachisrudetomesometimes:\n    Image:        zachthomas823/server\n    Port:         4000/TCP\n    Host Port:    0/TCP\n    Environment:  \u003cnone\u003e\n    Mounts:\n      /var/run/secrets/kubernetes.io/serviceaccount from default-token-fvgpv (ro)\nConditions:\n  Type           Status\n  PodScheduled   False \nVolumes:\n  default-token-fvgpv:\n    Type:        Secret (a volume populated by a Secret)\n    SecretName:  default-token-fvgpv\n    Optional:    false\nQoS Class:       BestEffort\nNode-Selectors:  \u003cnone\u003e\nTolerations:     node.kubernetes.io/not-ready:NoExecute for 300s\n                 node.kubernetes.io/unreachable:NoExecute for 300s\nEvents:\n  Type     Reason            Age        From               Message\n  ----     ------            ----       ----               -------\n  Warning  FailedScheduling  \u003cunknown\u003e  default-scheduler  0/1 nodes are available: 1 node(s) had taints that the pod didn't tolerate.\n  Warning  FailedScheduling  \u003cunknown\u003e  default-scheduler  0/1 nodes are available: 1 node(s) had taints that the pod didn't tolerate.\n"
 	}
 ]
