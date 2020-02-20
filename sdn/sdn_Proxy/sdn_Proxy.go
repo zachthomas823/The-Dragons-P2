@@ -6,8 +6,11 @@ import (
 	"io/ioutil"
 	"net"
 	"strings"
+	"sync"
 	"time"
 )
+
+var mu sync.Mutex
 
 const TIMETOSLEEP = 10 * time.Second
 
@@ -64,6 +67,7 @@ func Session(ln net.Listener, ConnSignal chan string, port string) {
 	var serverConn net.Conn = nil
 	var err error
 	for {
+		mu.Lock()
 		for k, v := range backendServers {
 			if strings.Contains(string(buf), k) {
 				serverConn, err = net.Dial("tcp", ":"+v)
@@ -83,6 +87,7 @@ func Session(ln net.Listener, ConnSignal chan string, port string) {
 		}
 
 	}
+	mu.Unlock()
 
 	toclient := make(chan []byte)
 	toserver := make(chan []byte)
@@ -128,7 +133,9 @@ func GrabServers() {
 
 		openFile, _ := ioutil.ReadFile("../serverlist.json")
 
+		mu.Lock()
 		_ = json.Unmarshal(openFile, &backendServers)
+		mu.Unlock()
 
 		time.Sleep(TIMETOSLEEP)
 	}
