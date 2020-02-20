@@ -32,7 +32,7 @@ Tolerations:     node.kubernetes.io/not-ready:NoExecute for 300s
 Events:
   Type     Reason            Age                 From               Message
   ----     ------            ----                ----               -------
-  Warning  FailedScheduling  61s (x22 over 27m)  default-scheduler  0/1 nodes are available: 1 node(s) had taints that the pod didn't tolerate.
+  Warning  FailedScheduling  71s (x23 over 28m)  default-scheduler  0/1 nodes are available: 1 node(s) had taints that the pod didn't tolerate.
 he pod didn't tolerate.
 e.
  63m)  default-scheduler  0/1 nodes are available: 1 node(s) had taints that the pod didn't tolerate.
