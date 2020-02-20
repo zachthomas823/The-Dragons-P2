@@ -22,8 +22,8 @@ func main() {
 
 func readCommands() {
 	for {
-		commandFile, _ := os.OpenFile("../commandlist", os.O_RDWR|os.O_CREATE, 7777)
 		mu.Lock()
+		commandFile, _ := os.OpenFile("../commandlist", os.O_RDWR|os.O_CREATE, 7777)
 		AllBytes, _ := ioutil.ReadAll(commandFile)
 		commandFile.Truncate(0)
 		mu.Unlock()

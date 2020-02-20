@@ -69,11 +69,11 @@ func Session(ln net.Listener, ConnSignal chan string, port string) {
 				serverConn, err = net.Dial("tcp", ":"+v)
 				if err != nil {
 					conn.Write([]byte("Could not resolve: " + PublicIP + ":" + v))
-					//Server Could not be dialed, remove it from backendservers here
+					fmt.Println("Could not resolve: " + PublicIP + ":" + v)
 					return
 				} else {
-					defer serverConn.Close()
 					serverConn.Write(buf)
+					fmt.Println(string(buf))
 					break
 				}
 			}
@@ -114,6 +114,8 @@ func SessionWriter(Conn net.Conn, shutdown chan string, writer chan []byte) {
 
 	for {
 		buf := <-writer
+
+		fmt.Println(string(buf))
 
 		Conn.Write(buf)
 
