@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net"
@@ -37,11 +38,48 @@ func readCommands() {
 
 		Lines := strings.Split(string(AllBytes), "\n")
 
-		for _, v := range Lines {
+		for k, v := range Lines {
 			command := strings.Split(string(v), " ")
-			_, err := exec.Command(command[0], command[1:]...).Output()
-			if err != nil {
-				fmt.Println(err)
+			exec.Command(command[0], command[1:]...).Output()
+
+			if len(command) >= 2 && command[1] == "expose" {
+				output, _ := exec.Command("kubectl", "get", "svc").Output()
+
+				t := strings.Split(string(output), "\n")
+				t = t[1:]
+
+				for _, v := range t {
+					z := strings.Split(v, " ")
+
+					var temp []string
+
+					for k2, v2 := range z {
+						z[k2] = strings.TrimSpace(v2)
+						if z[k2] != "" {
+							temp = append(temp, z[k2])
+						}
+					}
+
+					z = temp
+
+					if len(z) >= 2 && z[0] == command[3] {
+						z = strings.Split(z[4], "/")
+						l := strings.Split(z[0], ":")
+
+						openFile, _ := ioutil.ReadFile("../serverlist.json")
+						maps := make(map[string]string)
+						json.Unmarshal(openFile, &maps)
+
+						temp := Lines[k+1]
+						maps[string(temp)] = l[1]
+
+						bytestowrite, _ := json.MarshalIndent(maps, "", "	")
+
+						ioutil.WriteFile("../serverlist.json", bytestowrite, 7777)
+
+					}
+
+				}
 			}
 		}
 		time.Sleep(5 * time.Second)
