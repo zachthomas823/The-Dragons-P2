@@ -1,3 +1,2 @@
 #! /bin/bash -xe
-sudo kubeadm join 172.31.5.246:6443 --token z3coug.0yviajl3b25d3ato     --discovery-token-ca-cert-hash sha256:4cd766e79b72e4e908ba9e68d0406c94f5180ead24d1ea906158693f118a2aca
-mkdir success
+sudo kubeadm join 172.31.11.207:6443 --token zvgup9.obanm6k7qqye9bfz     --discovery-token-ca-cert-hash sha256:dec35503929257788a49c615407b0b582c849eb85919198882d356ffd3797833 

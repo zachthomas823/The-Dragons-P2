@@ -29,7 +29,7 @@ resource "aws_instance" "worker"{
   #   ]
   # }
   provisioner "file" {
-    source      = "../setup_worker.sh"
+    source      = "setup_worker.sh"
     destination = "/tmp/setup_worker.sh"
   }
   # provisioner "file" {

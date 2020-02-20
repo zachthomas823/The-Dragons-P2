@@ -25,14 +25,66 @@ resource "aws_launch_template" "worker"{
 
 resource "aws_autoscaling_group" "worker_asg" {
   availability_zones = ["us-east-2a"]
-  desired_capacity   = 1
   max_size           = 5
+  desired_capacity   = 2
   min_size           = 1
 
   launch_template {
     id      = aws_launch_template.worker.id
     version = "$Latest"
   }
+}
+
+resource "aws_autoscaling_policy" "cpu_over" {
+  name                   = "cpu_utilization_over"
+  scaling_adjustment     = 1
+  adjustment_type        = "ChangeInCapacity"
+  cooldown               = 5
+  autoscaling_group_name = aws_autoscaling_group.worker_asg.name
+}
+
+resource "aws_cloudwatch_metric_alarm" "cpu_over" {
+  alarm_name          = "greater_than_cpu_usage"
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  evaluation_periods  = "1"
+  metric_name         = "CPUUtilization"
+  namespace           = "AWS/EC2"
+  period              = "60"
+  statistic           = "Average"
+  threshold           = "11"
+
+  dimensions = {
+    AutoScalingGroupName = aws_autoscaling_group.worker_asg.name
+  }
+
+  alarm_description = "This metric monitors ec2 cpu utilization"
+  alarm_actions     = [aws_autoscaling_policy.cpu_over.arn]
+}
+
+resource "aws_autoscaling_policy" "cpu_under" {
+  name                   = "cpu_utilization_under"
+  scaling_adjustment     = -1
+  adjustment_type        = "ChangeInCapacity"
+  cooldown               = 5
+  autoscaling_group_name = aws_autoscaling_group.worker_asg.name
+}
+
+resource "aws_cloudwatch_metric_alarm" "cpu_under" {
+  alarm_name          = "less_than_cpu_usage"
+  comparison_operator = "LessThanThreshold"
+  evaluation_periods  = "1"
+  metric_name         = "CPUUtilization"
+  namespace           = "AWS/EC2"
+  period              = "60"
+  statistic           = "Average"
+  threshold           = "11"
+
+  dimensions = {
+    AutoScalingGroupName = aws_autoscaling_group.worker_asg.name
+  }
+
+  alarm_description = "This metric monitors ec2 cpu utilization"
+  alarm_actions     = [aws_autoscaling_policy.cpu_under.arn]
 }
 
 resource "aws_security_group" "SSH" {

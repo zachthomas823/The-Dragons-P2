@@ -7,7 +7,7 @@ provider "aws" {
 }
 
 resource "aws_instance" "master" {
-  ami           = "ami-0fc20dd1da406780b"
+  ami           = "ami-0b91880e8186ee958"
   instance_type = "t2.medium"
 
   #Generate your own Key_Name from AWS and use that here
@@ -64,6 +64,10 @@ resource "aws_instance" "master" {
     source      = "../../sdn"
     destination = "/home/ubuntu/sdn"
   }
+  # provisioner "file" {
+  #   source      = "../../dashboard"
+  #   destination = "/home/ubuntu/dashboard"
+  # }
   provisioner "file" {
     source = "terraform"
     destination = "/home/ubuntu/terraform/terraform"

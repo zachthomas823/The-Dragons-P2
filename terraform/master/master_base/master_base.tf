@@ -24,7 +24,7 @@ resource "aws_instance" "master" {
   }
 
   provisioner "file" {
-    source      = "../setup_master.sh"
+    source      = "setup_master_base.sh"
     destination = "/tmp/setup_master.sh"
   }
   provisioner "remote-exec" {

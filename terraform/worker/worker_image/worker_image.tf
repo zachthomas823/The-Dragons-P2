@@ -8,5 +8,5 @@ provider "aws" {
 
 resource "aws_ami_from_instance" "worker_image" {
   name               = "worker_image"
-  source_instance_id = "i-0ae87790e1dc260cc"
+  source_instance_id = "i-0ae87790e1dc260cc" # Need to change this to the id of master_base instance
 }

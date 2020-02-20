@@ -8,5 +8,5 @@ provider "aws" {
 
 resource "aws_ami_from_instance" "master_image" {
   name               = "master_image"
-  source_instance_id = "i-080e93a85a6c0b798"
+  source_instance_id = "i-0f8bc5a1298eb613d"
 }
