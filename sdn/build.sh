@@ -1,14 +1,6 @@
-#!/bin/bash
+#! /bin/bash -xe
 
 cd sdn_Command
-go build .
-cd ..
-
-cd sdn_Controller
-go build .
-cd ..
-
-cd sdn_Launcher
 go build .
 cd ..
 
@@ -19,3 +11,8 @@ cd ..
 cd sdn_Proxy
 go build .
 cd ..
+
+cd ..
+
+cd dashboard
+go build .

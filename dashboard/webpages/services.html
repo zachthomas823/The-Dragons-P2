@@ -48,29 +48,6 @@
         </div>
         {{end}}
     </div>
-   
-
-    <input type="image" src="/static/plusbutton.png" onclick="document.getElementById('id01').style.display='block'"></input>
-
-    <div id="id01" class="w3-modal">
-        <div class="w3-modal-content w3-card-4">
-            <div class="w3-container">
-                <div class="w3-container w3-green">
-                    <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
-                    <h2>Create A New Pod</h2>
-                </div>
-                <form action="/" method="POST">
-                    <h2>Pod Name</h2>
-                    <input id="cmdInput" type="text" name="name" placeholder="Enter command"><br><br>
-                    <h2>Docker Image</h2>
-                    <input id="cmdInput" type="text" name="image" placeholder="Enter command"><br><br>
-                    <h2>Docker Port</h2>
-                    <input id="cmdInput" type="text" name="port" placeholder="Enter command"><br><br>
-                    <button value="Submit" class="w3-hover-black">Submit</button>
-                </form>
-            </div>
-        </div>
-    </div>
 
     <script>
         if ( window.history.replaceState ) {

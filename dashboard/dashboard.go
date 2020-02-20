@@ -23,11 +23,24 @@ type PodData struct {
 	Podlist []Pod
 }
 
+type Deployment struct {
+	Name        string
+	Ready       string
+	UpToDate    string
+	Available   string
+	Age         string
+	Description string
+}
+type DeploymentData struct {
+	DeploymentList []Deployment
+}
+
 var PodMaster PodData
+var DeploymentMaster DeploymentData
 
 func main() {
 	go GrabPods()
-	StartHTMLServer("4000")
+	StartHTMLServer("8081")
 }
 
 func Pods(w http.ResponseWriter, r *http.Request) {
@@ -35,24 +48,6 @@ func Pods(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Println(err)
 		return
-	}
-
-	if r.Method == "POST" {
-		inputname := r.FormValue("name")
-		fmt.Println(inputname)
-		inputimage := r.FormValue("image")
-		fmt.Println(inputimage)
-		inputport := r.FormValue("port")
-		fmt.Println(inputport)
-		conn, err := net.Dial("tcp", ":8080")
-		if err != nil {
-			fmt.Println(err)
-		}
-		conn.Write([]byte("kubectl run " + inputname + " --image=" + inputimage + " --port=" + inputport + "\n"))
-		conn.Close()
-		net.Dial("tcp", ":8080")
-		conn.Write([]byte("kubectl expose deployment " + inputname + " --type=NodePort --name=" + inputname))
-		conn.Close()
 	}
 
 	t.Execute(w, PodMaster)
@@ -64,25 +59,6 @@ func Nodes(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err)
 		return
 	}
-
-	if r.Method == "POST" {
-		inputname := r.FormValue("name")
-		fmt.Println(inputname)
-		inputimage := r.FormValue("image")
-		fmt.Println(inputimage)
-		inputport := r.FormValue("port")
-		fmt.Println(inputport)
-		conn, err := net.Dial("tcp", ":8080")
-		if err != nil {
-			fmt.Println(err)
-		}
-		conn.Write([]byte("kubectl run " + inputname + " --image=" + inputimage + " --port=" + inputport + "\n"))
-		conn.Close()
-		conn, _ = net.Dial("tcp", ":8080")
-		conn.Write([]byte("kubectl expose deployment " + inputname + " --type=NodePort --name=" + inputname))
-		conn.Close()
-	}
-
 	t.Execute(w, PodMaster)
 }
 
@@ -104,14 +80,16 @@ func Deployments(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			fmt.Println(err)
 		}
+		fmt.Println(inputname)
 		conn.Write([]byte("kubectl run " + inputname + " --image=" + inputimage + " --port=" + inputport + "\n"))
 		conn.Close()
-		net.Dial("tcp", ":8080")
+
+		conn, _ = net.Dial("tcp", ":8080")
 		conn.Write([]byte("kubectl expose deployment " + inputname + " --type=NodePort --name=" + inputname))
 		conn.Close()
 	}
 
-	t.Execute(w, PodMaster)
+	t.Execute(w, DeploymentMaster)
 }
 
 func Services(w http.ResponseWriter, r *http.Request) {
@@ -119,24 +97,6 @@ func Services(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Println(err)
 		return
-	}
-
-	if r.Method == "POST" {
-		inputname := r.FormValue("name")
-		fmt.Println(inputname)
-		inputimage := r.FormValue("image")
-		fmt.Println(inputimage)
-		inputport := r.FormValue("port")
-		fmt.Println(inputport)
-		conn, err := net.Dial("tcp", ":8080")
-		if err != nil {
-			fmt.Println(err)
-		}
-		conn.Write([]byte("kubectl run " + inputname + " --image=" + inputimage + " --port=" + inputport + "\n"))
-		conn.Close()
-		net.Dial("tcp", ":8080")
-		conn.Write([]byte("kubectl expose deployment " + inputname + " --type=NodePort --name=" + inputname))
-		conn.Close()
 	}
 
 	t.Execute(w, PodMaster)
@@ -153,7 +113,10 @@ func StartHTMLServer(port string) {
 	http.HandleFunc("/nodes", Nodes)
 	fmt.Println("Online - Now Listening On Port: " + port)
 
-	http.ListenAndServe(":"+port, nil)
+	err := http.ListenAndServe(":"+port, nil)
+	if err != nil {
+		fmt.Println(err)
+	}
 }
 
 func GrabPods() {
@@ -161,6 +124,10 @@ func GrabPods() {
 		openFile, _ := ioutil.ReadFile("../sdn/pods.json")
 
 		_ = json.Unmarshal(openFile, &PodMaster.Podlist)
+
+		openFile, _ = ioutil.ReadFile("../sdn/deployments.json")
+
+		_ = json.Unmarshal(openFile, &DeploymentMaster.DeploymentList)
 
 		time.Sleep(10 * time.Second)
 	}
