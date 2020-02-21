@@ -13,7 +13,7 @@ data "template_file" "user_data" {
 resource "aws_launch_template" "worker"{
   name_prefix   = "worker"
   image_id      = "ami-0920a73d71dd0ab71"
-  instance_type = "t2.micro"
+  instance_type = "t2.small"
   # user_data = base64encode(file("join.sh"))
   user_data = base64encode(data.template_file.user_data.rendered)
 
@@ -21,11 +21,15 @@ resource "aws_launch_template" "worker"{
   #DO NOT UPLOAD THESE FILES, make sure they are masked by the .gitignore
   key_name = "Temp"
   security_group_names = [aws_security_group.SSH.name]
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "aws_autoscaling_group" "worker_asg" {
   availability_zones = ["us-east-2a"]
-  max_size           = 5
+  max_size           = 3
   desired_capacity   = 2
   min_size           = 1
 
@@ -51,7 +55,7 @@ resource "aws_cloudwatch_metric_alarm" "cpu_over" {
   namespace           = "AWS/EC2"
   period              = "60"
   statistic           = "Average"
-  threshold           = "11"
+  threshold           = "90"
 
   dimensions = {
     AutoScalingGroupName = aws_autoscaling_group.worker_asg.name
@@ -77,7 +81,7 @@ resource "aws_cloudwatch_metric_alarm" "cpu_under" {
   namespace           = "AWS/EC2"
   period              = "60"
   statistic           = "Average"
-  threshold           = "11"
+  threshold           = "5"
 
   dimensions = {
     AutoScalingGroupName = aws_autoscaling_group.worker_asg.name
@@ -106,3 +110,11 @@ resource "aws_security_group" "SSH" {
     cidr_blocks     = ["0.0.0.0/0"]
   }
 }
+
+# terraform {
+#   backend "s3" {
+#       bucket = "the-dragons-worker"
+#       key    = "terraform.tfstate"
+#       region = "us-east-2"
+#   }
+# }
