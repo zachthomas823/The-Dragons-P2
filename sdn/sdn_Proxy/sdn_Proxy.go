@@ -18,7 +18,6 @@ const TIMETOSLEEP = 10 * time.Second
 //clientserver
 var backendServers map[string]string = make(map[string]string)
 var shutdownchan chan string = make(chan string)
-var PublicIP string
 
 func main() {
 	fmt.Println("Software Defined Network Terminal")
@@ -72,12 +71,11 @@ func Session(ln net.Listener, ConnSignal chan string, port string) {
 			if strings.Contains(string(buf), k) {
 				serverConn, err = net.Dial("tcp", ":"+v)
 				if err != nil {
-					conn.Write([]byte("Could not resolve: " + PublicIP + ":" + v))
-					fmt.Println("Could not resolve: " + PublicIP + ":" + v)
+					conn.Write([]byte("Could not resolve: " + ":" + v))
+					fmt.Println("Could not resolve: " + ":" + v)
 					return
 				} else {
 					serverConn.Write(buf)
-					fmt.Println(string(buf))
 					break
 				}
 			}
@@ -89,42 +87,40 @@ func Session(ln net.Listener, ConnSignal chan string, port string) {
 	}
 	mu.Unlock()
 
-	toclient := make(chan []byte)
-	toserver := make(chan []byte)
 	shutdownSession := make(chan string)
-	go SessionWriter(conn, shutdownchan, toclient)
-	go SessionWriter(serverConn, shutdownchan, toserver)
-	go SessionListener(serverConn, shutdownSession, toclient)
-	go SessionListener(conn, shutdownSession, toserver)
+	go SessionListener(serverConn, shutdownSession, conn)
+	go SessionListener(conn, shutdownSession, serverConn)
 	<-shutdownSession
-	time.Sleep(5 * time.Second)
 }
 
 //SessionListener listens for connections noise and sends it to the writer
-func SessionListener(Conn net.Conn, shutdown chan string, writer chan []byte) {
+func SessionListener(Conn net.Conn, shutdown chan string, Conn1 net.Conn) {
+	var cnt = 0
 	for {
-		buf := make([]byte, 1024)
-		Conn.SetReadDeadline(time.Now().Add(30 * time.Second))
-		_, err := Conn.Read(buf)
-		if err != nil {
-			fmt.Println(err)
+		var temp []byte
+		for {
+			buf := make([]byte, 1024)
+			Conn.SetReadDeadline(time.Now().Add(1 * time.Second))
+			_, err := Conn.Read(buf)
+			if err != nil {
+				if len(temp) == 0 {
+					cnt++
+				} else {
+					cnt = 0
+				}
+				break
+			}
+			temp = append(temp, buf...)
+		}
+		mu.Lock()
+		Conn1.Write(temp)
+		mu.Unlock()
+
+		if cnt >= 50 {
 			break
 		}
-		writer <- buf
 	}
-	shutdown <- "Session Closed"
-}
-
-func SessionWriter(Conn net.Conn, shutdown chan string, writer chan []byte) {
-
-	for {
-		buf := <-writer
-
-		fmt.Println(string(buf))
-
-		Conn.Write(buf)
-
-	}
+	shutdown <- "Ending"
 }
 
 //GrabServers test
