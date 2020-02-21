@@ -133,4 +133,8 @@ output "instance_ip" {
 #       key    = "terraform.tfstate"
 #       region = "us-east-2"
 #   }
+<<<<<<< HEAD
 # }
+=======
+# }
+>>>>>>> 433e855477632e6a0fc9895beed56968295c9f2d
