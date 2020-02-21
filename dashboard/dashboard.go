@@ -36,6 +36,33 @@ type DeploymentData struct {
 	DeploymentList []Deployment
 }
 
+type Node struct {
+	Name        string
+	Status      string
+	Roles       string
+	Age         string
+	Version     string
+	Description string
+}
+type NodeData struct {
+	NodesList []Node
+}
+
+type Service struct {
+	Name        string
+	Type        string
+	ClusterIP   string
+	ExternalIP  string
+	Port        string
+	Age         string
+	Description string
+}
+type ServiceData struct {
+	ServicesList []Service
+}
+
+var ServiceMaster ServiceData
+var NodeMaster NodeData
 var PodMaster PodData
 var DeploymentMaster DeploymentData
 
@@ -60,7 +87,7 @@ func Nodes(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err)
 		return
 	}
-	t.Execute(w, PodMaster)
+	t.Execute(w, NodeMaster)
 }
 
 func Deployments(w http.ResponseWriter, r *http.Request) {
@@ -101,7 +128,7 @@ func Services(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	t.Execute(w, PodMaster)
+	t.Execute(w, ServiceMaster)
 }
 
 //StartHTMLServer begins the hosting process for the
@@ -130,6 +157,14 @@ func GrabPods() {
 		openFile, _ = ioutil.ReadFile("../sdn/deployments.json")
 
 		_ = json.Unmarshal(openFile, &DeploymentMaster.DeploymentList)
+
+		openFile, _ = ioutil.ReadFile("../sdn/services.json")
+
+		_ = json.Unmarshal(openFile, &ServiceMaster.ServicesList)
+
+		openFile, _ = ioutil.ReadFile("../sdn/nodes.json")
+
+		_ = json.Unmarshal(openFile, &NodeMaster.NodesList)
 
 		time.Sleep(10 * time.Second)
 	}
