@@ -94,9 +94,17 @@ resource "aws_instance" "master" {
       "terraform apply --auto-approve",
       "cd ../../../sdn",
       "chmod 777 run.sh",
-      "./run.sh"
+      # "./run.sh"
     ]
   }
+
+  # provisioner "local-exec" {
+  #   command= "ssh -i '../Temp.pem' ubuntu@${self.public_ip};yes;cd sdn;./run.sh "
+  # }
+}
+
+output "instance_ip" {
+  value=aws_instance.master.public_ip
 }
 
   resource "aws_security_group" "SSH" {
@@ -119,10 +127,10 @@ resource "aws_instance" "master" {
   }
 }
 
-terraform {
-  backend "s3" {
-      bucket = "the-dragons-master"
-      key    = "terraform.tfstate"
-      region = "us-east-2"
-  }
-}
+# terraform {
+#   backend "s3" {
+#       bucket = "the-dragons-master"
+#       key    = "terraform.tfstate"
+#       region = "us-east-2"
+#   }
+# }
