@@ -1,0 +1,28 @@
+sudo ssh -i ./basekey.pem ubuntu@3.20.240.178
+sudo docker run --rm -p 8082:9090 --name balancer --network my-net balancer
+sudo docker run -p 80:8080 -p 50000:50000 jenkins/jenkins:lts
+
+sudo ssh -i ./basekey.pem ubuntu@3.15.16.179
+
+docker tag local-image:tagname new-repo:tagname
+docker push new-repo:tagname
+
+export AWS_ACCESS_KEY_ID="";
+export AWS_SECRET_ACCESS_KEY="";
+export AWS_DEFAULT_REGION="us-east-2";
+
+#Set up Jenkins container
+sudo  docker cp /home/ubuntu/terraform/Temp.pem Jenkins:/
+sudo docker cp /usr/local/bin/terraform Jenkins:/usr/local/bin
+
+ls -a ${WORKSPACE}/Jenkins
+
+
+export AWS_SECRET_ACCESS_KEY="$(cat secret_key | tr -d "\t\n\r")"
+export AWS_ACCESS_KEY_ID="$(cat access_key | tr -d "\t\n\r")"
+
+echo "$AWS_SECRET_ACCESS_KEY" > secret_key
+echo "$AWS_ACCESS_KEY_ID" > access_key
+
+echo export AWS_SECRET_ACCESS_KEY="$(cat /home/ubuntu/terraform/secret_key | tr -d "\t\n\r")" >> ~/.bashrc
+echo export AWS_ACCESS_KEY_ID="$(cat /home/ubuntu/terraform/access_key | tr -d "\t\n\r")" >> ~/.bashrc
