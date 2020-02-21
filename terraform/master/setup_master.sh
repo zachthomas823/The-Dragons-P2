@@ -67,5 +67,5 @@ kubectl create -f https://docs.projectcalico.org/v3.11/manifests/calico.yaml
 iptables -P FORWARD ACCEPT
 
 # Add keys to environmental variable
-export AWS_ACCESS_KEY_ID="$(cat access_key | tr -d "\t\n\t")"
-export AWS_SECRET_ACCESS_KEY="$(cat secret_key | tr -d "\t\n\t")"
+export AWS_ACCESS_KEY_ID="$(cat /home/ubuntu/terraform/access_key | tr -d "\t\n\t")"
+export AWS_SECRET_ACCESS_KEY="$(cat /home/ubuntu/terraform/secret_key | tr -d "\t\n\t")"

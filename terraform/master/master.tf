@@ -90,7 +90,7 @@ resource "aws_instance" "master" {
       "cd worker/worker_as",
       "sudo chmod 777 join.sh",
       "kubeadm token create --print-join-command >> join.sh",
-      "terraform init --auto-approve",
+      "terraform init",
       "terraform apply --auto-approve",
       "cd ../../../sdn",
       "chmod 777 run.sh",
